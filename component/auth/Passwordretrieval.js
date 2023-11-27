@@ -12,7 +12,13 @@ import {
   View,
 } from 'react-native';
 import SvgComponent from '../../asset/SVG/SvgComponent';
+import { TouchableWithoutFeedback, Keyboard } from 'react-native';
 
+const DismissKeyboard = ({ children }) => (
+  <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+    {children}
+  </TouchableWithoutFeedback>
+)
 
 function Passwordretrieval({navigation}){
 
@@ -54,6 +60,7 @@ function Passwordretrieval({navigation}){
 
 
       return(
+        <DismissKeyboard>
             <SafeAreaView style={styles.container}>
                 <View style={styles.header}>
              
@@ -87,7 +94,7 @@ function Passwordretrieval({navigation}){
                                 value={phone}
                        />
                       <Text style={styles.rules}></Text>
-                      <Text style={{ fontSize: 16, color: 'red', marginTop: 4 }}>{isValidPhone ? '' : errorMessage}</Text>
+                      <Text style={{position: 'absolute', fontSize: 16, color: 'red' }}>{isValidPhone ? '' : errorMessage}</Text>
                       <TouchableOpacity style={styles.button} onPress={() => submit()}>
                          <Text style = {styles.textButton}>QUÊN MẬT KHẨU</Text>
                       </TouchableOpacity>
@@ -104,8 +111,8 @@ function Passwordretrieval({navigation}){
                 </View>
 
             </SafeAreaView>
-
-      )
+          </DismissKeyboard>
+    )
 }
 
 const styles = StyleSheet.create({
@@ -156,7 +163,7 @@ const styles = StyleSheet.create({
       registryy:{
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
        
       },
       input: {
@@ -166,7 +173,8 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         paddingLeft: 20,
         paddingRight: 20,
-        color: 'black'
+        color: 'black',
+        marginBottom: 12
       },
     //   rules: {
     //          width: 320,
@@ -189,7 +197,7 @@ const styles = StyleSheet.create({
         width:240,
         borderRadius: 5,
         backgroundColor: '#008F33',
-        marginTop: 26,
+        marginTop: 24,
         justifyContent: 'center',
         alignItems: 'center',
         
