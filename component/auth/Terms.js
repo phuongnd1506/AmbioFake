@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   Image,
-  SafeAreaView,
+  
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -12,14 +12,15 @@ import {
   View,
 } from 'react-native';
 import SvgComponent from '../../asset/SVG/SvgComponent';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 function Terms({navigation}){
       return(
-            <SafeAreaView style={styles.container}>
+            <SafeAreaView style={styles.container} edges={['right', 'left', 'top']}>
                 <View style={styles.header}>
              
-                    <SvgComponent style={{width: 70, height: 70, color: '#fff', fontWeight: 'bold'}}
+                    <SvgComponent style={{width: 100, height: 100, color: '#fff', fontWeight: 'bold'}}
                                    onPress = {() => {navigation.goBack()}}
                     />
              
@@ -88,8 +89,8 @@ const styles = StyleSheet.create({
       container: {
         flex: 1,
         backgroundColor: '#00C853',
-        justifyContent: 'flex-end'
-        
+        justifyContent: 'flex-end',
+       
       },
      
       header:{ 
@@ -110,9 +111,9 @@ const styles = StyleSheet.create({
       },
       textHeader:{
          color: '#fff',
-         
-         fontSize: 20,
-         fontWeight: '500',
+         marginRight: 20,
+         fontSize: 16,
+         fontWeight: '600',
         
       },
       body: {
@@ -120,7 +121,7 @@ const styles = StyleSheet.create({
         flex:  1,
         borderTopRightRadius: 26,
         borderTopLeftRadius: 26,
-        backgroundColor: '#dddddd',
+        backgroundColor: '#ECEFF2',
        
       },
 

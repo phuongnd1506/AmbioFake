@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { MaterialCommunityIcons } from "@react-navigation/native"; 
 import {
   Image,
-  SafeAreaView,
+  
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import SvgComponent from '../../asset/SVG/SvgComponent';
 import { TouchableWithoutFeedback, Keyboard } from 'react-native';
-
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 
@@ -60,11 +60,11 @@ function Authenticatelogin({navigation}){
 
       return( 
         <DismissKeyboard>
-            <SafeAreaView style={styles.container}>
+            <SafeAreaView style={styles.container} edges={['right', 'left', 'top']}>
            
                 <View style={styles.header}>
              
-                    <SvgComponent style={{color: '#fff', fontWeight: 'bold'}}
+                    <SvgComponent style={{width: 100, height: 100, color: '#fff', fontWeight: 'bold'}}
                                    onPress = {() => {navigation.goBack()}}
                     />
              
@@ -141,7 +141,8 @@ const styles = StyleSheet.create({
       container: {
         flex: 1,
         backgroundColor: '#00C853',
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
+        // position: 'relative'
         
       },
      
@@ -150,9 +151,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingHorizontal: 14
-        
-       
+        paddingHorizontal: 14,
+        // marginBottom: 706
+
       },
       backArrow: {
         color: '#fff',
@@ -164,9 +165,9 @@ const styles = StyleSheet.create({
       },
       textHeader:{
          color: '#fff',
-         
-         fontSize: 20,
-         fontWeight: '500',
+         marginRight: 23,
+         fontSize: 16,
+         fontWeight: '600',
          
       },
       body: {
@@ -174,8 +175,12 @@ const styles = StyleSheet.create({
         flex:  1,
         borderTopRightRadius: 26,
         borderTopLeftRadius: 26,
-        backgroundColor: '#dddddd',
-       
+        backgroundColor: '#ECEFF2',
+        // position: 'absolute',
+        // left: 0,
+        // right: 0,
+        // top: 50,
+        // bottom: 0
       },
       logo: {
         flex: 1,
@@ -249,14 +254,14 @@ const styles = StyleSheet.create({
       textFooterLeft: {
         marginBottom: 26,
         color: '#005920',
-        fontSize: 20,
+        fontSize: 16,
         fontWeight: '600'
     
       },
       textFooterRight: {
         marginBottom: 26,
         color: '#005920',
-        fontSize: 20,
+        fontSize: 16,
         fontWeight: '600'
       }
 });

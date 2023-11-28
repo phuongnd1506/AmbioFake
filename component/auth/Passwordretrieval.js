@@ -1,7 +1,7 @@
 import {React, useState} from 'react';
 import {
   Image,
-  SafeAreaView,
+  
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -13,6 +13,8 @@ import {
 } from 'react-native';
 import SvgComponent from '../../asset/SVG/SvgComponent';
 import { TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 
 const DismissKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -61,10 +63,10 @@ function Passwordretrieval({navigation}){
 
       return(
         <DismissKeyboard>
-            <SafeAreaView style={styles.container}>
+            <SafeAreaView style={styles.container} edges={['right', 'left', 'top']}>
                 <View style={styles.header}>
              
-                    <SvgComponent style={{color: '#fff', fontWeight: 'bold'}}
+                    <SvgComponent style={{width: 100, height: 100, color: '#fff', fontWeight: 'bold'}}
                                    onPress = {() => {navigation.goBack()}}
                     />
              
@@ -95,7 +97,7 @@ function Passwordretrieval({navigation}){
                        />
                       <Text style={styles.rules}></Text>
                       <Text style={{position: 'absolute', fontSize: 16, color: 'red' }}>{isValidPhone ? '' : errorMessage}</Text>
-                      <TouchableOpacity style={styles.button} onPress={() => submit()}>
+                      <TouchableOpacity style={styles.button} onPress={() => {submit(); isValidPhone ? navigation.navigate('AuthPasswordRetrieval', {auth: phone}) : null }}>
                          <Text style = {styles.textButton}>QUÊN MẬT KHẨU</Text>
                       </TouchableOpacity>
                     </View>
@@ -128,7 +130,8 @@ const styles = StyleSheet.create({
          flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingHorizontal: 14
+        paddingHorizontal: 14,
+        // marginBottom: 706
        
       },
       backArrow: {
@@ -140,9 +143,9 @@ const styles = StyleSheet.create({
       },
       textHeader:{
          color: '#fff',
-         
-         fontSize: 20,
-         fontWeight: '500',
+         marginRight: 14,
+         fontSize: 16,  
+         fontWeight: '600',
          
       },
 
@@ -152,8 +155,13 @@ const styles = StyleSheet.create({
         flex:  1,
         borderTopRightRadius: 26,
         borderTopLeftRadius: 26,
-        backgroundColor: '#dddddd',
-       
+        backgroundColor: '#ECEFF2',
+        // position: 'absolute',
+        // right: 0,
+        // left: 0,
+        // bottom: 0,
+        // top: 50
+
       },
       logo: {
         flex: 1,
@@ -219,14 +227,14 @@ const styles = StyleSheet.create({
       textFooterLeft: {
         marginBottom: 26,
         color: '#005920',
-        fontSize: 20,
+        fontSize: 16,
         fontWeight: '600'
     
       },
       textFooterRight: {
         marginBottom: 26,
         color: '#005920',
-        fontSize: 20,
+        fontSize: 16,
         fontWeight: '600'
       }
 });

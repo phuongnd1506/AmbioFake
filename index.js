@@ -11,5 +11,6 @@ import Terms from './component/auth/Terms';
 import Register from './component/auth/Register';
 import index from './src/index';
 import Authenticatelogin from './component/auth/Authenticatelogin';
+import AuthRegister from './component/auth/AuthRegister';
 
 AppRegistry.registerComponent(appName, () => index);

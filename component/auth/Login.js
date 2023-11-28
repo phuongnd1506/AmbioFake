@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
   Image,
-  SafeAreaView,
+ 
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import { KeyboardAvoidingView } from 'react-native';
 import { TouchableWithoutFeedback, Keyboard } from 'react-native';
-
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 const DismissKeyboard = ({ children }) => (
@@ -61,7 +61,7 @@ function Login({ navigation }) {
 
   return (
 
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['right', 'left', 'top']}>
       <DismissKeyboard>
         <View style={styles.body}>
           <View style={styles.logo}>
@@ -110,7 +110,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#00C853',
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
+    // position: 'relative'
 
   },
   body: {
@@ -118,8 +119,11 @@ const styles = StyleSheet.create({
     height: 732,
     borderTopRightRadius: 26,
     borderTopLeftRadius: 26,
-    backgroundColor: '#dddddd',
-
+    backgroundColor: '#ECEFF2',
+    // position: 'absolute',
+    // right: 0,
+    // left: 0,
+    // bottom: 0
   },
   logo: {
     flex: 1,
@@ -172,7 +176,7 @@ const styles = StyleSheet.create({
     color: '#005920'
   },
   textForgotPassword: {
-    fontSize: 20,
+    fontSize: 18,
     marginTop: 32,
     fontWeight: '600',
     color: '#005920'

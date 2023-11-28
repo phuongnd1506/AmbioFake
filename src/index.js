@@ -25,7 +25,8 @@ import Register from '../component/auth/Register';
 import Passwordretrieval from '../component/auth/Passwordretrieval';
 import Terms from '../component/auth/Terms';
 import Authenticatelogin from '../component/auth/Authenticatelogin';
-
+import AuthRegister from '../component/auth/AuthRegister';
+import AuthPasswordRetrieval from '../component/auth/AuthPasswordRetrieval';
 
 
 const Stack = createNativeStackNavigator();
@@ -40,6 +41,8 @@ function index(){
                    <Stack.Screen name="Register" component={Register} />
                    <Stack.Screen name="Passwordretrieval" component={Passwordretrieval} />
                    <Stack.Screen name="Terms" component={Terms} />
+                   <Stack.Screen name="AuthRegister" component={AuthRegister} />
+                   <Stack.Screen name="AuthPasswordRetrieval" component={AuthPasswordRetrieval}/>
            </Stack.Navigator>
             
         </NavigationContainer>
