@@ -14,6 +14,8 @@ import {
 import SvgComponent from '../../asset/SVG/SvgComponent';
 import { TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import axios from 'axios';
+import Toast from 'react-native-toast-message';
 
 
 const DismissKeyboard = ({ children }) => (
@@ -27,7 +29,50 @@ function Register({navigation}){
   const [isValidPhone, setValidPhone] = useState(true)
   const [errorMessage, setErrorMessage] = useState('')
 
+  
+  const handleButtonClick = () => {
+    Keyboard.dismiss();
+  };
+  
+ 
+
   const submit = () => {
+
+    const showToast = () => {
+      Toast.show({
+        type: "error",
+        text1: "Thông báo",
+        text2: `${phoneeee} không phải là số điện thoại`,
+        autoHide: true,
+        position: 'top',
+        visibilityTime: 2500,
+        topOffset: 0,
+        
+      })
+    }
+
+    const showToast1 = () => {
+      Toast.show({
+        type: "error",
+        text1: "Thông báo",
+        text2: `${phoneeee} Đã tồn tại`,
+        autoHide: true,
+        position: 'top',
+        visibilityTime: 2500,
+        topOffset: 0,
+        
+      })
+    }
+
+
+
+    const phonee = `Không tồn tại số điện thoại ${phone}`
+    const phoneee = phonee.slice(29 )
+    const phoneeee = `+84${phoneee}`
+
+
+
+
     verifyPhoneNumber3(phone);
 
     if (!isValidPhone) {
@@ -35,7 +80,33 @@ function Register({navigation}){
     }
 
     console.log(phone);
+   
+   //http://192.168.86.20:3000/api/v1/users/register
+   axios.post('https://ambio.vercel.app/api/v1/users/register', {"phoneNumber": phone} )
+    .then(res => 
+                    {isValidPhone ?  navigation.navigate('AuthRegister', {tokenn: res.data.token, auth: phone})  : null 
+             
+                     console.log(res.data)
+                    
+  })
+  .catch(function (error) {
+    if (error.response.data.errCode == 'AMBIO002') {
+      if(!phone){
+        return null
+  } else{
+     isValidPhone ? showToast() : null}
+
+      
+    } 
+    if (error.response.data.errCode == 'AMBIO003') {
+      showToast1()
+    
+  } 
+  
+  })
   };
+
+
 
   const verifyPhoneNumber3 = (e) => {
     setPhone(e);
@@ -49,7 +120,7 @@ function Register({navigation}){
       pphone: e
     }
 
-    let regex = new RegExp(/([\+84|84|0]+(3|5|7|8|9|1[2|6|8|9]))+([0-9]{8})\b/)
+    let regex = new RegExp(/^([\+84|84|0]+(3|5|7|8|9|1[2|6|8|9]))+([0-9]{8,13})$/)
     if (!regex.test(formData.pphone)) {
       setErrorMessage('Số điện thoại không hợp lệ');
       setValidPhone(false);
@@ -62,9 +133,20 @@ function Register({navigation}){
 
 
       return(
-        <DismissKeyboard>
-            <SafeAreaView style={styles.container} edges={['right', 'left', 'top']}>
-              
+         <DismissKeyboard>
+            <>
+          <SafeAreaView
+
+            edges={["left", "right", "top"]}
+            style={{
+            flex: 1,
+            backgroundColor: "#00C853",
+            position: 'relative'
+                  }}
+            
+          >
+         
+                
                 <View style={styles.header}>
              
                     <SvgComponent style={{width: 100, height: 100, color: '#fff', fontWeight: 'bold', /*position: 'absolute', bottom: 720, left: 18*/}}
@@ -76,6 +158,7 @@ function Register({navigation}){
                     <Text></Text>
                </View>
                 <View style={styles.body}>
+                  <Toast/>
                     <View style={styles.logo}>
                     {/* <Image source={require('./asset/ambio_1628393628-removebg-preview.png')}
                              style = {{width: 200, height: 200}}
@@ -102,7 +185,7 @@ function Register({navigation}){
 
                       <Text style={styles.rules}>Bạn bấm tiếp tục là đồng nghĩa với việc chấp nhận <Text style={{textDecorationLine: 'underline', color: '#228B22'}} onPress={() =>{navigation.navigate('Terms')}}>điều khoản của chúng tôi</Text></Text>
                       
-                      <TouchableOpacity style={styles.button} onPress={() => {submit(); isValidPhone ?  navigation.navigate('AuthRegister', {auth: phone})  : null }}>
+                      <TouchableOpacity style={styles.button} onPress={() => {submit(); handleButtonClick()}}>
                          <Text style = {styles.textButton}>TIẾP TỤC</Text>
                       </TouchableOpacity>
                     </View>
@@ -116,9 +199,13 @@ function Register({navigation}){
 
 
                 </View>
-             
-            </SafeAreaView>
-          </DismissKeyboard>
+              
+           </SafeAreaView>
+
+            <SafeAreaView  edges={["bottom"]}
+              style={{ flex: 0, backgroundColor: "#ECEFF2" }}/>
+          </>
+        </DismissKeyboard>
       )
 }
 
@@ -137,6 +224,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: 14,
         // position: 'relative'
+        backgroundColor: '#00C853'
         
        
       },

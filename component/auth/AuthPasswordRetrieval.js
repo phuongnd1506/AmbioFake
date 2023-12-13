@@ -14,6 +14,7 @@ import {
 import SvgComponent from '../../asset/SVG/SvgComponent';
 import { TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import axios from 'axios';
 
 const DismissKeyboard = ({ children}) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -27,14 +28,26 @@ function AuthPasswordRetrieval({navigation, route}){
   const [isValidPhone, setValidPhone] = useState(true)
   const [errorMessage, setErrorMessage] = useState('')
 
+  const {authh} = route.params
+  const {tokenn} = route.params
+
   const submit = () => {
     verifyPhoneNumber3(phone);
     if (!isValidPhone) {
         return;
       }
-  
+      
+      console.log(authh)
       console.log(phone);
-  };
+      console.log(tokenn)
+      
+      //http://192.168.86.20:3000/api/v1/users/verifyCode
+      axios.post('https://ambio.vercel.app/api/v1/users/verifyCode', {"phoneNumber": authh, "code": Number.parseInt(phone), "token": tokenn })
+      .then(res =>  {console.log(res.data)
+                    isValidPhone ? navigation.navigate('CreatePasswordPasswordRetrieval', {authh, tokenn}) : null})
+      .catch(error => console.log(error.response.data))
+   
+    };
 
   const verifyPhoneNumber3 = (e) => {
     setPhone(e);
@@ -57,7 +70,14 @@ function AuthPasswordRetrieval({navigation, route}){
 
       return(
         <DismissKeyboard>
-            <SafeAreaView style={styles.container} edges={['right', 'left', 'top']}>
+
+          <>
+            <SafeAreaView  edges={["left", "right", "top"]}
+            style={{
+            flex: 1,
+            backgroundColor: "#00C853",
+            position: 'relative'
+                  }}>
                 <View style={styles.header}>
              
                     <SvgComponent style={{width: 100, height: 100, color: '#fff', fontWeight: 'bold'}}
@@ -107,6 +127,10 @@ function AuthPasswordRetrieval({navigation, route}){
                 </View>
 
             </SafeAreaView>
+            <SafeAreaView  edges={["bottom"]}
+              style={{ flex: 0, backgroundColor: "#ECEFF2" }}/>
+
+           </> 
           </DismissKeyboard>
     )
 }

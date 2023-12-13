@@ -14,6 +14,8 @@ import {
 import SvgComponent from '../../asset/SVG/SvgComponent';
 import { TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import axios from 'axios';
+import Toast from 'react-native-toast-message';
 
 
 const DismissKeyboard = ({ children }) => (
@@ -28,7 +30,45 @@ function Passwordretrieval({navigation}){
   const [isValidPhone, setValidPhone] = useState(true)
   const [errorMessage, setErrorMessage] = useState('')
 
+  const handleButtonClick = () => {
+    Keyboard.dismiss();
+  };
+
   const submit = () => {
+
+    const showToast = () => {
+      Toast.show({
+        type: "error",
+        text1: "Thông báo",
+        text2: `Không tồn tại số điện thoại ${phoneeee}`,
+        autoHide: true,
+        position: 'top',
+        visibilityTime: 2500,
+        topOffset: 0,
+        
+      })
+    }
+
+    const showToast1 = () => {
+      Toast.show({
+        type: "error",
+        text1: "Thông báo",
+        text2: `${phoneeee} không phải là số điện thoại`,
+        autoHide: true,
+        position: 'top',
+        visibilityTime: 2500,
+        topOffset: 0,
+        
+      })
+    }
+
+    const phonee = `Không tồn tại số điện thoại ${phone}`
+    const phoneee = phonee.slice(29 )
+    const phoneeee = `+84${phoneee}`
+
+
+
+
     verifyPhoneNumber3(phone);
 
     if (!isValidPhone) {
@@ -36,6 +76,22 @@ function Passwordretrieval({navigation}){
     }
 
     console.log(phone);
+
+    //http://192.168.86.20:3000/api/v1/users/forgotPassword
+    axios.post('https://ambio.vercel.app/api/v1/users/forgotPassword	', {"phoneNumber": phone})
+    .then(res => {
+      isValidPhone ? navigation.navigate('AuthPasswordRetrieval', {authh: phone, tokenn: res.data.token}) : null
+      console.log(res.data)
+    
+    })
+    .catch(function (error) {
+      if (error.response.data.errCode == 'AMBIO004') {
+         showToast();
+      } 
+      if (error.response.data.errCode == 'AMBIO002') {
+        showToast1();
+     } 
+    });
   };
 
   const verifyPhoneNumber3 = (e) => {
@@ -50,7 +106,7 @@ function Passwordretrieval({navigation}){
       pphone: e
     }
 
-    let regex = new RegExp(/([\+84|84|0]+(3|5|7|8|9|1[2|6|8|9]))+([0-9]{8})\b/)
+    let regex = new RegExp(/^([\+84|84|0]+(3|5|7|8|9|1[2|6|8|9]))+([0-9]{8,13})$/)
     if (!regex.test(formData.pphone)) {
       setErrorMessage('Số điện thoại không hợp lệ');
       setValidPhone(false);
@@ -63,7 +119,13 @@ function Passwordretrieval({navigation}){
 
       return(
         <DismissKeyboard>
-            <SafeAreaView style={styles.container} edges={['right', 'left', 'top']}>
+          <>
+            <SafeAreaView  edges={["left", "right", "top"]}
+            style={{
+            flex: 1,
+            backgroundColor: "#00C853",
+            position: 'relative'
+                  }}>
                 <View style={styles.header}>
              
                     <SvgComponent style={{width: 100, height: 100, color: '#fff', fontWeight: 'bold'}}
@@ -75,6 +137,7 @@ function Passwordretrieval({navigation}){
                     <Text></Text>
                 </View>
                 <View style={styles.body}>
+                <Toast/>
                     <View style={styles.logo}>
                     {/* <Image source={require('./asset/ambio_1628393628-removebg-preview.png')}
                              style = {{width: 200, height: 200}}
@@ -97,7 +160,7 @@ function Passwordretrieval({navigation}){
                        />
                       <Text style={styles.rules}></Text>
                       <Text style={{position: 'absolute', fontSize: 16, color: 'red' }}>{isValidPhone ? '' : errorMessage}</Text>
-                      <TouchableOpacity style={styles.button} onPress={() => {submit(); isValidPhone ? navigation.navigate('AuthPasswordRetrieval', {auth: phone}) : null }}>
+                      <TouchableOpacity style={styles.button} onPress={() => {submit(); handleButtonClick() }}>
                          <Text style = {styles.textButton}>QUÊN MẬT KHẨU</Text>
                       </TouchableOpacity>
                     </View>
@@ -113,6 +176,9 @@ function Passwordretrieval({navigation}){
                 </View>
 
             </SafeAreaView>
+            <SafeAreaView  edges={["bottom"]}
+              style={{ flex: 0, backgroundColor: "#ECEFF2" }}/>
+            </>
           </DismissKeyboard>
     )
 }

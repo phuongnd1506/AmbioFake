@@ -17,7 +17,14 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 function Terms({navigation}){
       return(
-            <SafeAreaView style={styles.container} edges={['right', 'left', 'top']}>
+
+        <>
+        <SafeAreaView  edges={["left", "right", "top"]}
+        style={{
+        flex: 1,
+        backgroundColor: "#00C853",
+        position: 'relative'
+              }}>
                 <View style={styles.header}>
              
                     <SvgComponent style={{width: 100, height: 100, color: '#fff', fontWeight: 'bold'}}
@@ -80,8 +87,10 @@ function Terms({navigation}){
 
                 </View>
 
-            </SafeAreaView>
-
+        </SafeAreaView>
+        <SafeAreaView  edges={["bottom"]}
+        style={{ flex: 0, backgroundColor: "#ECEFF2" }}/>
+      </>
       )
 }
 

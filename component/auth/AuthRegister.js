@@ -14,6 +14,7 @@ import {
 import SvgComponent from '../../asset/SVG/SvgComponent';
 import { TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import axios from 'axios';
 
 
 const DismissKeyboard = ({ children }) => (
@@ -28,6 +29,10 @@ function AuthRegister({navigation, route}){
   const [isValidPhone, setValidPhone] = useState(true)
   const [errorMessage, setErrorMessage] = useState('')
 
+
+  const {tokenn} = route.params
+  const {auth} = route.params
+
   const submit = () => {
     verifyPhoneNumber3(phone);
 
@@ -35,7 +40,25 @@ function AuthRegister({navigation, route}){
       return;
     }
 
-    console.log(phone);
+    console.log(phone)
+    console.log(route.params.auth)
+    console.log(route.params.tokenn)
+    
+     //http://192.168.86.20:3000/api/v1/users/verifyCode
+     axios.post('https://ambio.vercel.app/api/v1/users/verifyCode', {"phoneNumber": auth, "code": Number.parseInt(phone),  "token": tokenn})
+      .then(res => {
+                    
+        isValidPhone ? navigation.navigate('CreatePassword', {tokenn, auth}) : null
+
+                           })
+
+      .catch(function (error) {
+        if (error.response.data.errCode == 'AMBIO002') {
+               setErrorMessage('Code không hợp lệ hoặc hết hạn')
+               setValidPhone(false)
+        } 
+      });
+
   };
 
   const verifyPhoneNumber3 = (e) => {
@@ -59,7 +82,14 @@ function AuthRegister({navigation, route}){
 
       return(
         <DismissKeyboard>
-            <SafeAreaView style={styles.container} edges={['right', 'left', 'top']}>
+
+            <>
+            <SafeAreaView  edges={["left", "right", "top"]}
+            style={{
+            flex: 1,
+            backgroundColor: "#00C853",
+            position: 'relative'
+                  }}>
                 <View style={styles.header}>
              
                     <SvgComponent style={{width: 100, height: 100, color: '#fff', fontWeight: 'bold'}}
@@ -109,6 +139,10 @@ function AuthRegister({navigation, route}){
                 </View>
 
             </SafeAreaView>
+            <SafeAreaView  edges={["bottom"]}
+              style={{ flex: 0, backgroundColor: "#ECEFF2" }}/>
+           </>
+    
           </DismissKeyboard>
     )
 }
