@@ -118,12 +118,6 @@ function Authenticatelogin({ navigation, route }) {
     } catch (e) {
       //error
     }
-
-  
-
-  
-
-
   };
   const verifyPhoneNumber3 = (e) => {
     setPassword(e);
@@ -150,9 +144,9 @@ function Authenticatelogin({ navigation, route }) {
   }
 
   return (
-    <DismissKeyboard>
+    
 
-      <>
+      <View style={styles.container}>
         <SafeAreaView edges={["left", "right", "top"]}
           style={{
             flex: 1,
@@ -199,6 +193,7 @@ function Authenticatelogin({ navigation, route }) {
 
 
               />
+             
               <TouchableOpacity
                 activeOpacity={0.8}
                 style={styles.visibilityBtn}
@@ -207,13 +202,13 @@ function Authenticatelogin({ navigation, route }) {
                 <Image source={hidePassword ? require('../../asset/eye.png') : require('../../asset/hidden.png')} style={styles.btnImage} />
 
               </TouchableOpacity>
-
+             
 
 
 
 
               {/* <Text style={styles.rules}>Bạn bấm tiếp tục là đồng nghĩa với việc chấp nhận <Text style={{textDecorationLine: 'underline', color: '#228B22'}} onPress={() =>{navigation.navigate('Terms')}}>điều khoản của chúng tôi</Text></Text> */}
-              <Text style={{ fontSize: 16, color: 'red', marginTop: 4 }}>{isValidPhone ? '' : errorMessage}</Text>
+              <Text style={{ fontSize: 16, color: 'red', bottom: 12 }}>{isValidPhone ? '' : errorMessage}</Text>
               <TouchableOpacity style={styles.button} onPress={() => submit()}>
                 <Text style={styles.textButton}>ĐĂNG NHẬP</Text>
               </TouchableOpacity>
@@ -234,8 +229,8 @@ function Authenticatelogin({ navigation, route }) {
         <SafeAreaView edges={["bottom"]}
           style={{ flex: 0, backgroundColor: "#ECEFF2" }} />
 
-      </>
-    </DismissKeyboard>
+      </View>
+   
 
   )
 }
@@ -307,15 +302,26 @@ const styles = StyleSheet.create({
     position: 'relative'
   },
 
+  visibilityBtn: {
+     
+        backgroundColor: '#fff',
+        height: 20,
+        width: 20,
+        bottom: 34,
+        left: 146
+
+
+  },
 
   btnImage: {
     position: 'absolute',
     height: 20,
     width: 20,
-    left: 138,
-    bottom: 12
-
+   
+    bottom: 1,
+  
   },
+  
   //   rules: {
   //          width: 320,
   //          marginTop: 54
@@ -336,7 +342,7 @@ const styles = StyleSheet.create({
     width: 240,
     borderRadius: 5,
     backgroundColor: '#008F33',
-    marginTop: 48,
+    marginTop: 40,
     justifyContent: 'center',
     alignItems: 'center'
   },

@@ -86,7 +86,7 @@ function Passwordretrieval({navigation}){
     })
     .catch(function (error) {
       if (error.response.data.errCode == 'AMBIO004') {
-         showToast();
+         isValidPhone ? showToast() : null
       } 
       if (error.response.data.errCode == 'AMBIO002') {
         showToast1();
@@ -118,8 +118,8 @@ function Passwordretrieval({navigation}){
 
 
       return(
-        <DismissKeyboard>
-          <>
+       
+          <View style={styles.container}>
             <SafeAreaView  edges={["left", "right", "top"]}
             style={{
             flex: 1,
@@ -178,8 +178,8 @@ function Passwordretrieval({navigation}){
             </SafeAreaView>
             <SafeAreaView  edges={["bottom"]}
               style={{ flex: 0, backgroundColor: "#ECEFF2" }}/>
-            </>
-          </DismissKeyboard>
+          </View>
+          
     )
 }
 

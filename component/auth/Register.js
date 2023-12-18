@@ -133,8 +133,8 @@ function Register({navigation}){
 
 
       return(
-         <DismissKeyboard>
-            <>
+       
+          <View style={styles.container}>
           <SafeAreaView
 
             edges={["left", "right", "top"]}
@@ -204,8 +204,8 @@ function Register({navigation}){
 
             <SafeAreaView  edges={["bottom"]}
               style={{ flex: 0, backgroundColor: "#ECEFF2" }}/>
-          </>
-        </DismissKeyboard>
+          </View>
+       
       )
 }
 

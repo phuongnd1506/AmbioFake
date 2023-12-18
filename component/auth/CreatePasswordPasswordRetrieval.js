@@ -67,7 +67,7 @@ function CreatePasswordPasswordRetrieval({navigation, route}){
    console.log(tokenn)
    
    //http://192.168.86.20:3000/api/v1/users/newPassword
-    axios.post('https://ambio.vercel.app/api/v1/users/newPassword',{
+   isValidPhone ? (axios.post('https://ambio.vercel.app/api/v1/users/newPassword',{
                                                                      "phoneNumber": authh,
                                                                      "newPassWord": newPassword,
                                                                      "clientID": deviceId,
@@ -77,7 +77,7 @@ function CreatePasswordPasswordRetrieval({navigation, route}){
                                                                      })
     .then(async res => { await storeData(res.data.accessToken)
                   isValidPhone ?  navigation.navigate('LoginManagement') : null   })
-    .catch(error => console.log(error.response.data))
+    .catch(error => console.log(error.response.data))) : null
    
  verifyPhoneNumber3(newPassword);                                                               
     if (!isValidPhone) {
@@ -152,8 +152,8 @@ function CreatePasswordPasswordRetrieval({navigation, route}){
   }
 
       return(
-        <DismissKeyboard>
-          <>
+     
+          <View style={styles.container}>
             <SafeAreaView  edges={["left", "right", "top"]}
             style={{
             flex: 1,
@@ -208,7 +208,7 @@ function CreatePasswordPasswordRetrieval({navigation, route}){
               </TouchableOpacity>
                       
                      
-                      <Text style={{ fontSize: 16, color: 'red' }}>{isValidPhone ? '' : errorMessage}</Text>
+                      <Text style={{ fontSize: 16, color: 'red', bottom: 14 }}>{isValidPhone ? '' : errorMessage}</Text>
                       
                      
                       <TouchableOpacity style={styles.button} onPress={() => {submit();  }}>
@@ -229,8 +229,8 @@ function CreatePasswordPasswordRetrieval({navigation, route}){
             </SafeAreaView>
             <SafeAreaView  edges={["bottom"]}
               style={{ flex: 0, backgroundColor: "#ECEFF2" }}/>
-            </>
-          </DismissKeyboard>
+            </View>
+         
     )
 }
 
@@ -306,13 +306,25 @@ const styles = StyleSheet.create({
     //          marginTop: 
     //   },
 
-    btnImage: {
-        position: 'absolute',
-        height: 20,
-        width: 20,
-        left: 138,
-        bottom: 12
-    },
+    visibilityBtn: {
+     
+      backgroundColor: '#fff',
+      height: 20,
+      width: 20,
+      bottom: 34,
+      left: 146
+
+
+},
+
+btnImage: {
+  position: 'absolute',
+  height: 20,
+  width: 20,
+ 
+  bottom: 1,
+
+},
       TextInput: {
             marginBottom: 10,
             color: '#000',

@@ -69,9 +69,9 @@ function AuthPasswordRetrieval({navigation, route}){
 
 
       return(
-        <DismissKeyboard>
+       
 
-          <>
+          <View style={styles.container}>
             <SafeAreaView  edges={["left", "right", "top"]}
             style={{
             flex: 1,
@@ -96,7 +96,7 @@ function AuthPasswordRetrieval({navigation, route}){
                       /> */}
                     </View>
                     <View style ={styles.registryy}>
-                      <Text style={styles.TextInput}>Mã xác nhận sẽ được gửi số điện thoại {route.params.auth}, vui lòng kiếm tra và nhập mã xác thực để tiếp tục</Text>
+                      <Text style={styles.TextInput}>Mã xác nhận sẽ được gửi số điện thoại {authh}, vui lòng kiếm tra và nhập mã xác thực để tiếp tục</Text>
                       <TextInput placeholder='Nhập mã xác nhận'
                                  keyboardType= 'numeric'
                                  style={
@@ -110,7 +110,7 @@ function AuthPasswordRetrieval({navigation, route}){
                                 value={phone}
                        />
                       <Text style={styles.rules}></Text>
-                      <Text style={{fontSize: 16, color: 'red', marginBottom: 22}}>{isValidPhone ? '' : errorMessage}</Text>
+                      <Text style={{fontSize: 16, color: 'red', marginBottom: 22, bottom:10}}>{isValidPhone ? '' : errorMessage}</Text>
                       <TouchableOpacity style={styles.button} onPress={() => submit()}>
                          <Text style = {styles.textButton}>XÁC NHẬN</Text>
                       </TouchableOpacity>
@@ -130,8 +130,8 @@ function AuthPasswordRetrieval({navigation, route}){
             <SafeAreaView  edges={["bottom"]}
               style={{ flex: 0, backgroundColor: "#ECEFF2" }}/>
 
-           </> 
-          </DismissKeyboard>
+           </View> 
+        
     )
 }
 
@@ -209,7 +209,8 @@ const styles = StyleSheet.create({
       TextInput: {
             marginBottom: 10,
             color: '#000',
-            paddingHorizontal: 26
+            paddingHorizontal: 26,
+            textAlign:'center'
       },
 
       invalid:{

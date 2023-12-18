@@ -1,6 +1,6 @@
 
-import { React, useState, useEffect } from "react";
-import { StyleSheet, View, Text, TouchableOpacity, Alert } from "react-native";
+import { React, useState, useEffect, useRef } from "react";
+import { StyleSheet, View, Text, TouchableOpacity, Alert, AppState } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Image, FlatList } from "react-native";
 import axios from "axios"
@@ -12,63 +12,146 @@ function LoginManagement({navigation}) {
   const [infoUser, setInfoUser] = useState()
   const [historyLogins, setHistoryLogins] = useState([])
   const [token, setToken] = useState("")
+  const [isRefresh, setIsRefresh] = useState(false)
 
+
+  //AppState
+  console.log(token,1122334455)
+  const appState = useRef(AppState.currentState);
  
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', nextAppState => {
+      if (
+        appState.current.match(/inactive|background/) &&
+        nextAppState === 'hghghgh'
+      ) {
+        console.log('App has come to the foreground!');
+      }
+         
+      updateData1()
+      
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
+  
 
   const getData = async () => {
     try {
       const value = await AsyncStorage.getItem('accessToken');
-   
+    
       if (value !== null) {
         setToken(value)
+       
       }
     } catch (e) {
     }
   };
 
-  let config = {
+  
+
+  const updateData1 = async () => {
+    const valuee = await AsyncStorage.getItem('accessToken')
+    console.log(token,1241241414)
+    //http://192.168.86.20:3000/api/v1/users/historyLogin
+    try{
+   await axios.get('https://ambio.vercel.app/api/v1/users/historyLogin', {
     headers: {
       'Authorization': 'Bearer ' + token
     }
   }
-   
-
-  const getData1 = async () => {
-         
-       //http://192.168.86.20:3000/api/v1/users/historyLogin
-       axios.get('https://ambio.vercel.app/api/v1/users/historyLogin', config
-    )
-      .then(res => {
-        setInfoUser(res.data.infoUserLogin.phoneNumber)
-        setHistoryLogins(res.data.historyLogins)
-        console.log(res.data.historyLogins, "HistoryLogins")
-      }
       )
-      .catch(error => console.log(error,46456456))
+    .then(res => {
+      
+      setHistoryLogins(res.data.historyLogins)
+      console.log(res.data.historyLogins, "HistoryLogins")
+    }
+    )
+    .catch(error => {
+              
+               console.log(error.response.data)})
+          
+    }
+    
+    catch(e){
+      console.log("failed")
+    }
   }
+
+
+ const  removeValue = async () => {
+    try {
+      await AsyncStorage.removeItem('accessToken')
+    } catch(e) {
+      // remove error
+    }
+  }
+  
+  const getData2 = async  () => {
+    await  axios.post('https://ambio.vercel.app/api/v1/users/getUserInfo',{
+         "token": token
+      })
+       .then(res => {setInfoUser(res.data.phoneNumber)
+                      
+                     })
+       .catch(error => console.log(error.response.data))
+  }
+  
+     const getData1 =  async() => {
+          console.log(token,1241241414)
+        //http://192.168.86.20:3000/api/v1/users/historyLogin
+       await axios.get('https://ambio.vercel.app/api/v1/users/historyLogin', {
+        headers: {
+          'Authorization': 'Bearer ' + token
+        }
+      }
+          )
+        .then(res => {
+          
+          setHistoryLogins(res.data.historyLogins)
+          console.log(res.data.historyLogins, "HistoryLogins")
+        }
+        )
+        .catch(error => {
+                   console.log(123213123131)
+                   console.log(error.response.data)})
+       setIsRefresh(true)
+       setTimeout(() => { setIsRefresh(false) }, 1200)
+    }
 
   useEffect(() => {
     getData();
-  },[]);
-
+  });
+  
   useEffect(() => {
-   token && getData1()
-  }, [token]);
+   token && getData2();
+  },[token]);
+  
+  useEffect(() => {
+    token && getData1();
+  },[token])
 
 
-  const removeToken = async () => {
-    try {
-      await AsyncStorage.removeItem("accessToken");
-    } catch (error) {
-      console.log("Renove authentication token failed :", error?.message);
+  const onrefreshh = () => {
+    axios.post('https://ambio.vercel.app/api/v1/users/getUserInfo',{
+      "token": token
+   })
+    .then(res => {setInfoUser(res.data.phoneNumber)
+                   
+                  })
+    .catch(error => navigation.navigate('Login'))
+    setIsRefresh(true)
+       setTimeout(() => { setIsRefresh(false) }, 1200)
     }
-  };
-  
 
-
+  const onrefreshhh = () => {
+      onrefreshh()
+      getData1()
+  }
   
   
-
    const client = historyLogins.map((e) => {
         return {
           clientID: e.clientID
@@ -87,7 +170,7 @@ function LoginManagement({navigation}) {
       axios.delete('https://ambio.vercel.app/api/v1/users/logout', {data: client , headers: {
         'Authorization': 'Bearer ' + token
       }})
-      .then(res => getData1(), navigation.navigate('Login'), removeToken() )
+      .then(async res => await removeValue(), getData1(), getData2(), navigation.navigate('Login'), )
       .catch(function (error) {
      
         if (error.response) { 
@@ -121,7 +204,8 @@ function LoginManagement({navigation}) {
         axios.delete('https://ambio.vercel.app/api/v1/users/logout', {data: client , headers: {
           'Authorization': 'Bearer ' + token
         }})
-        .then(res => getData1(), isThisDevice ? navigation.navigate('Login') : null, removeToken() )
+        .then(async res => await  getData1(), isThisDevice ? navigation.navigate('Login') : null,   isThisDevice ? removeValue() : null )
+                        
         .catch(function (error) {
        
           if (error.response) {
@@ -239,19 +323,16 @@ function LoginManagement({navigation}) {
   // ]
 
 
-  const [isRefresh, setIsRefresh] = useState(false)
+ 
 
 
-  function addItem() {
-    setIsRefresh(true)
-    setTimeout(() => { setIsRefresh(false) }, 500)
-  }
+  
 
 
    
 
   return (
-    <>
+    <View style={styles. container}>
       <SafeAreaView style={{ flex: 1, backgroundColor: '#00C853', position: 'relative' }} edges={["left", "right", "top"]}>
         <View style={styles.header}>
           <View style={styles.headerImage}>
@@ -266,7 +347,7 @@ function LoginManagement({navigation}) {
         <View style={styles.body}>
           <FlatList data={historyLogins}
             refreshing={isRefresh}
-            onRefresh={addItem}
+            onRefresh={onrefreshhh}
             renderItem={(item, index) =>
 
                
@@ -300,8 +381,8 @@ function LoginManagement({navigation}) {
 
       </SafeAreaView>
       <SafeAreaView edges={["bottom"]} style={{ flex: 0, backgroundColor: "#FFF" }} />
-
-    </>
+    </View>
+    
   )
 
 
@@ -312,7 +393,9 @@ function LoginManagement({navigation}) {
 
 const styles = StyleSheet.create({
   container: {
-
+    flex: 1,
+    backgroundColor: '#00C853',
+    justifyContent: 'flex-end',
 
   },
 

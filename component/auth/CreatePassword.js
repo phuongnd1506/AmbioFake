@@ -164,11 +164,36 @@ function CreatePassword({navigation, route}){
       setValidPhone(false);
       return;
     }
-    if(e){
-        setErrorMessage('')
-        setValidPhone(true)
-    }
-
+    let formData = {
+        NewPasswordd: e
+      }
+  
+      let regex = new RegExp(/^(?=.*[a-zA-Z0-9]).{6,15}$/)
+      let regexx = new RegExp(/^(?=.*[0-9]).{6,}$/)
+      let regexxx = new RegExp(/^(?=.*[a-zA-Z]).{6,}$/)
+      if (!regex.test(formData.NewPasswordd)) {
+        setErrorMessage('Mật khẩu tối thiểu 6 kí tự và tối đa 15 kí tự');
+        setValidPhone(false);
+      }
+      else{
+            if(!regexx.test(formData.NewPasswordd)){
+            setErrorMessage('Mật khẩu phải có kí tự số');
+            setValidPhone(false)}
+            else {
+                if(!regexxx.test(formData.NewPasswordd)){
+                    setErrorMessage('Mật khẩu phải có kí tự chữ');
+                    setValidPhone(false)}
+                else{
+                    setValidPhone(true)
+                    setErrorMessage('')
+                }
+            }
+       }
+    
+    //   if(!(!regex.test(formData.NewPasswordd) && !regex.test(formData.NewPasswordd) && !regexxx.test(formData.NewPasswordd))){
+    //      setErrorMessage('')
+    //      setValidPhone(true)
+    //   }
 
   }
 
@@ -183,8 +208,8 @@ function CreatePassword({navigation, route}){
   }
 
       return(
-        <DismissKeyboard>
-          <>
+        
+          <View style={styles.container}>
             <SafeAreaView  edges={["left", "right", "top"]}
             style={{
             flex: 1,
@@ -239,7 +264,7 @@ function CreatePassword({navigation, route}){
               </TouchableOpacity>
                       
                      
-                      <Text style={{ fontSize: 16, color: 'red' }}>{isValidPhone ? '' : errorMessage}</Text>
+                      <Text style={{ fontSize: 16, color: 'red', bottom: 12 }}>{isValidPhone ? '' : errorMessage}</Text>
                       
                       <Text style={{textAlign:'center', marginTop: 20}}>Mật khẩu phải có độ dài tối thiểu 6 kí tự, bao gồm cả chữ và số, không trùng với số điện thoại và dễ đoán.</Text>
                       <TouchableOpacity style={styles.button} onPress={() => {submit();  }}>
@@ -260,8 +285,8 @@ function CreatePassword({navigation, route}){
             </SafeAreaView>
             <SafeAreaView  edges={["bottom"]}
               style={{ flex: 0, backgroundColor: "#ECEFF2" }}/>
-            </>
-          </DismissKeyboard>
+            </View>
+         
     )
 }
 
@@ -337,13 +362,25 @@ const styles = StyleSheet.create({
     //          marginTop: 
     //   },
 
-    btnImage: {
-        position: 'absolute',
-        height: 20,
-        width: 20,
-        left: 138,
-        bottom: 12
-    },
+    visibilityBtn: {
+     
+      backgroundColor: '#fff',
+      height: 20,
+      width: 20,
+      bottom: 34,
+      left: 146
+
+
+},
+
+btnImage: {
+  position: 'absolute',
+  height: 20,
+  width: 20,
+ 
+  bottom: 1,
+
+},
       TextInput: {
             marginBottom: 10,
             color: '#000'

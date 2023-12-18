@@ -134,7 +134,7 @@ function Login({ navigation }) {
   return (
 
     
-   <>
+   <View style={styles.container}> 
     <SafeAreaView  edges={["left", "right", "top"]}
             style={{
             flex: 1,
@@ -190,7 +190,7 @@ function Login({ navigation }) {
     <SafeAreaView  edges={["bottom"]}
               style={{ flex: 0, backgroundColor: "#ECEFF2" }}/>
     
-     </>
+     </View>
    
 
   )
@@ -199,8 +199,9 @@ function Login({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     
-    backgroundColor: '#ECEFF2',
-    justifyContent: 'flex-end',
+    flex: 1,
+    backgroundColor: '#00C853',
+  
     // position: 'relative'
 
   },

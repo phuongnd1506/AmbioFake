@@ -63,12 +63,13 @@ const Main = () => {
           setInitialRoute('LoginManagement');
       
         } else {
+          console.log(value,235435345354353)
           setInitialRoute('Login');
         }
         setInitialised(true)
       }
     }
-    getStorageValue();}, 800)
+    getStorageValue();}, 2000)
     }, []);
   
     return (initialised

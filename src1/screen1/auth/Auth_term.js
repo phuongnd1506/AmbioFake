@@ -11,13 +11,15 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-import SvgComponent from '../../asset/SVG/SvgComponent';
+import SvgComponent from '../../../asset/SVG/SvgComponent';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Header } from '../../component1';
 
 
-function Terms({navigation}){
+function Auth_term({navigation}){
       return(
-
+        <>
+        <StatusBar backgroundColor= '#00C853'/>
         <View style={styles.container}>
         <SafeAreaView  edges={["left", "right", "top"]}
         style={{
@@ -25,16 +27,14 @@ function Terms({navigation}){
         backgroundColor: "#00C853",
         position: 'relative'
               }}>
-                <View style={styles.header}>
+                
              
-                    <SvgComponent style={{width: 100, height: 100, color: '#fff', fontWeight: 'bold'}}
-                                   onPress = {() => {navigation.goBack()}}
-                    />
+                   
              
                  
-                    <Text style={styles.textHeader}>ĐIỀU KHOẢN</Text>
-                    <Text></Text>
-                </View>
+                <Header textHeader="ĐIỀU KHOẢN" onBackPress={() => navigation.goBack()}/>
+                    
+               
                 <View style={styles.body}>
                   <ScrollView>
                     <Text style={styles.secondaryClause}> Khi quý khác truy cập vào trang web hoặc ứng dụng của chúng tôi có nghĩa là quý khách đồng ý với các điều khoản này. Xin vui lòng đọc kỹ trước khi quyết định mua hàng:</Text>
@@ -91,6 +91,7 @@ function Terms({navigation}){
         <SafeAreaView  edges={["bottom"]}
         style={{ flex: 0, backgroundColor: "#ECEFF2" }}/>
       </View>
+      </>
       )
 }
 
@@ -218,4 +219,4 @@ const styles = StyleSheet.create({
     //   }
 });
 
-export default Terms;
+export default Auth_term;

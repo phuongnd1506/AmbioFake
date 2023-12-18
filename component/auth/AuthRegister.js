@@ -81,9 +81,9 @@ function AuthRegister({navigation, route}){
 
 
       return(
-        <DismissKeyboard>
+     
 
-            <>
+            <View style={styles.container}>
             <SafeAreaView  edges={["left", "right", "top"]}
             style={{
             flex: 1,
@@ -141,9 +141,9 @@ function AuthRegister({navigation, route}){
             </SafeAreaView>
             <SafeAreaView  edges={["bottom"]}
               style={{ flex: 0, backgroundColor: "#ECEFF2" }}/>
-           </>
+            </View>
     
-          </DismissKeyboard>
+          
     )
 }
 
