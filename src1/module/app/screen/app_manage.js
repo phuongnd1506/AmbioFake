@@ -8,39 +8,51 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
 import getToken from "../ulti";
 import { getUserInfo } from "../ulti/API.js";
+import { getHistoryLogin } from "../ulti/API.js";
+import { Logout } from "../ulti/API.js";
 
 function App_manage({ navigation }) {
 
-    console.log(phoneNumber,55555555555)
+
     const [history, setHistory] = useState('')
     const [infoUser, setInfoUser] = useState()
     const [historyLogins, setHistoryLogins] = useState([])
     const [isRefresh, setIsRefresh] = useState(false)
     var [token, setToken] = useState("")
-     
-
-    const getData = async () => {
-        try {
-            const value = await AsyncStorage.getItem('accessToken');
-            if (value !== null) {
-                setToken(value)
 
 
-            }
-        } catch (e) {
-        }
-    };
+    const getTokenn = async () => {
+        const tokenn = await getToken()
+        setToken(tokenn)
+    }
     useEffect(() => {
-        getData();
-    });
-   
-    
+
+        getTokenn()
+    })
+
+    // getInfoUser
+    const phoneNumberInfoUser = async (token) => {
+        const phoneNumberr = await getUserInfo(token);
+        setInfoUser(phoneNumberr)
+        console.log(phoneNumberr, "infoUserPhone")
+    }
+
+    // getHistoryLogin
+    const getHistoryLoginn = async (token) => {
+        const history = await getHistoryLogin(token);
+        setHistoryLogins(history)
+        console.log(history, "historyyyyyyyyLogin")
+    }
+
     useEffect(() => {
-        token &&  getUserInfo(token)
-        
+        token && phoneNumberInfoUser(token), getHistoryLoginn(token)
     }, [token])
 
-    const rs = getUserInfo(token)
+   
+
+
+    //logout
+    
     // //AppState
 
     // const appState = useRef(AppState.currentState);
@@ -320,10 +332,10 @@ function App_manage({ navigation }) {
     // }
 
 
- function addItem() {
-     setIsRefresh(true)
-     setTimeout(() => {setIsRefresh(false)}, 1000)
- }
+    function addItem() {
+        setIsRefresh(true)
+        setTimeout(() => { setIsRefresh(false) }, 1000)
+    }
 
 
     return (
@@ -335,7 +347,7 @@ function App_manage({ navigation }) {
                     </View>
                     <View style={styles.textInfo}>
                         <Text style={styles.textHeader}>Chào, deviceName1</Text>
-                        <Text style={styles.textHeader}>{rs}</Text>
+                        <Text style={styles.textHeader}>{infoUser}</Text>
                     </View>
                 </View>
 
@@ -359,7 +371,7 @@ function App_manage({ navigation }) {
                                 </View>
 
                                 <TouchableOpacity style={styles.itemRight}>
-                                    <Text style={styles.textItemRight} onPress={() => { twoOptionAlertHandler(item.item.clientID, item.item.isThisDevice, item.item.deviceName) }}>Đăng xuất</Text>
+                                    <Text style={styles.textItemRight} onPress={() => { Logout(token, item.item.clientID, item.item.isThisDevice, historyLogins, navigation) }}>Đăng xuất</Text>
                                 </TouchableOpacity>
 
                             </View>
