@@ -19,7 +19,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
 import { Button, Header } from '../../component1';
-import { TextInputLogin} from '../../component1/Input';
+import { TextInputLogin } from '../../component1/Input';
 
 
 
@@ -147,40 +147,40 @@ function Auth_register1({ navigation }) {
 
     return (
         <>
-        <StatusBar backgroundColor= '#00C853'/>
-        <View style={styles.container}>
-            <SafeAreaView edges={["left", "right", "top"]}
-                style={{
-                    flex: 1,
-                    backgroundColor: "#00C853",
-                    position: 'relative'
-                }}>
-                <Header textHeader="ĐĂNG KÝ" onBackPress={() => navigation.goBack()} />
-                <View style={styles.body}>
-                    <Toast></Toast>
-                    <View style={styles.logo}>
+            <StatusBar backgroundColor='#00C853' />
+            <View style={styles.container}>
+                <SafeAreaView edges={["left", "right", "top"]}
+                    style={{
+                        flex: 1,
+                        backgroundColor: "#00C853",
+                        position: 'relative'
+                    }}>
+                    <Header textHeader="ĐĂNG KÝ" onBackPress={() => navigation.goBack()} />
+                    <View style={styles.body}>
+                        <Toast></Toast>
+                        <View style={styles.logo}>
+                        </View>
+                        <View style={styles.register}>
+                            <Text style={styles.TextInput}>Nhập số điện thoại của bạn sau đó tiếp tục</Text>
+                            <TextInputLogin validate={verifyPhoneNumber3} isValidPhonee={isValidPhone} errorM={errorMessage} phone={phone} />
+                            <Text style={styles.rules}>Bạn bấm tiếp tục là đồng nghĩa với việc chấp nhận <Text style={{ textDecorationLine: 'underline', color: '#228B22' }} onPress={() => { navigation.navigate('Auth_term') }}>điều khoản của chúng tôi</Text></Text>
+                            <Button textButton="ĐĂNG KÝ" Submit={submitAll} />
+
+                        </View>
+
+
+
+                        <View style={styles.footer}>
+                            <Text style={styles.textFooterLeft} onPress={() => { navigation.navigate('Auth_login1') }}>Đăng nhập</Text>
+                            <Text style={styles.textFooterRight} onPress={() => { navigation.navigate('Auth_forgotpassword1') }}>Quên mật khẩu</Text>
+
+                        </View>
                     </View>
-                    <View style={styles.register}>
-                        <Text style={styles.TextInput}>Nhập số điện thoại của bạn sau đó tiếp tục</Text>
-                        <TextInputLogin validate={verifyPhoneNumber3} isValidPhonee={isValidPhone} errorM={errorMessage} phone={phone} />
-                        <Text style={styles.rules}>Bạn bấm tiếp tục là đồng nghĩa với việc chấp nhận <Text style={{ textDecorationLine: 'underline', color: '#228B22' }} onPress={() => { navigation.navigate('Auth_term') }}>điều khoản của chúng tôi</Text></Text>
-                        <Button textButton="ĐĂNG KÝ" Submit={submitAll} />
+                </SafeAreaView>
+                <SafeAreaView edges={["bottom"]}
+                    style={{ flex: 0, backgroundColor: "#ECEFF2" }} />
 
-                    </View>
-
-
-
-                    <View style={styles.footer}>
-                        <Text style={styles.textFooterLeft} onPress={() => { navigation.navigate('Auth_login1') }}>Đăng nhập</Text>
-                        <Text style={styles.textFooterRight} onPress={() => { navigation.navigate('Auth_forgotpassword1') }}>Quên mật khẩu</Text>
-
-                    </View>
-                </View>
-            </SafeAreaView>
-            <SafeAreaView edges={["bottom"]}
-                style={{ flex: 0, backgroundColor: "#ECEFF2" }} />
-
-        </View>
+            </View>
         </>
     )
 }

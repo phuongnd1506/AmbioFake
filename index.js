@@ -26,7 +26,17 @@ import Auth_register3 from './src1/screen1/auth/Auth_register3';
 import Auth_forgotpassword3 from './src1/screen1/auth/Auth_forgotpassword3';
 import Auth_term from './src1/screen1/auth/Auth_term';
 import Maine from './src1/screen1/Maine';
-import Index from './src1/screen1/auth/Index';
-import LoadingScreen from './src1/screen1/loading/LoadingScreen';
 
-AppRegistry.registerComponent(appName, () => Maine);
+import LoadingScreen from './src1/screen1/loading/LoadingScreen';
+import auth_login1 from './src1/module/auth/screen/auth_login1';
+import auth_login2 from './src1/module/auth/screen/auth_login2';
+import auth_forgotpassword1 from './src1/module/auth/screen/auth_forgotpassword1';
+import auth_forgotpassword2 from './src1/module/auth/screen/auth_forgotpassword2';
+import Button from './src1/uicore/button.js';
+import Index from './src1/module/auth/screen';
+import auth_forgotpassword3 from './src1/module/auth/screen/auth_forgotpassword3';
+import auth_register1 from './src1/module/auth/screen/auth_register1';
+import auth_register2 from './src1/module/auth/screen/auth_register2';
+import auth_register3 from './src1/module/auth/screen/auth_register3';
+
+AppRegistry.registerComponent(appName, () => Index);

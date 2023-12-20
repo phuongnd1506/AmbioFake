@@ -134,11 +134,11 @@ function Auth_register3({ navigation, route }) {
 
                 .catch(error => { console.log(error) })
 
-                verifyPhoneNumber3(password);
+            verifyPhoneNumber3(password);
 
-                if (!isValidPhone) {
-                    return;
-                }
+            if (!isValidPhone) {
+                return;
+            }
         }
 
     };
@@ -172,39 +172,39 @@ function Auth_register3({ navigation, route }) {
 
     return (
         <>
-        <StatusBar backgroundColor= '#00C853'/>
-        <View style={styles.container}>
-            <SafeAreaView edges={["left", "right", "top"]}
-                style={{
-                    flex: 1,
-                    backgroundColor: "#00C853",
-                    position: 'relative'
-                }}>
-                <Header textHeader="TẠO MẬT KHẨU" onBackPress={() => navigation.goBack()} />
-                <View style={styles.body}>
-                    <View style={styles.logo}>
+            <StatusBar backgroundColor='#00C853' />
+            <View style={styles.container}>
+                <SafeAreaView edges={["left", "right", "top"]}
+                    style={{
+                        flex: 1,
+                        backgroundColor: "#00C853",
+                        position: 'relative'
+                    }}>
+                    <Header textHeader="TẠO MẬT KHẨU" onBackPress={() => navigation.goBack()} />
+                    <View style={styles.body}>
+                        <View style={styles.logo}>
+                        </View>
+                        <View style={styles.register}>
+                            <Text style={styles.TextInput}>Nhập mật khẩu để đăng nhập ở lần sau</Text>
+                            <TextInputLogin2 validate={verifyPhoneNumber3} isValidPhonee={isValidPhone} errorM={errorMessage} phone={password} />
+                            <Text style={styles.rules}>Mật khẩu phải có độ dài tối thiểu 6 kí tự, bao gồm cả chữ và số, không trùng với số điện thoại và dễ đoán.</Text>
+                            <Button textButton="HOÀN THÀNH" Submit={submitAll} />
+
+                        </View>
+
+
+
+                        <View style={styles.footer}>
+                            <Text style={styles.textFooterLeft} onPress={() => { navigation.navigate('Auth_login1') }}>Đăng nhập</Text>
+                            <Text style={styles.textFooterRight} onPress={() => { navigation.navigate('Auth_forgotpassword1') }}>Quên mật khẩu</Text>
+
+                        </View>
                     </View>
-                    <View style={styles.register}>
-                        <Text style={styles.TextInput}>Nhập mật khẩu để đăng nhập ở lần sau</Text>
-                        <TextInputLogin2 validate={verifyPhoneNumber3} isValidPhonee={isValidPhone} errorM={errorMessage} phone={password} />
-                        <Text style={styles.rules}>Mật khẩu phải có độ dài tối thiểu 6 kí tự, bao gồm cả chữ và số, không trùng với số điện thoại và dễ đoán.</Text>
-                        <Button textButton="HOÀN THÀNH" Submit={submitAll} />
+                </SafeAreaView>
+                <SafeAreaView edges={["bottom"]}
+                    style={{ flex: 0, backgroundColor: "#ECEFF2" }} />
 
-                    </View>
-
-
-
-                    <View style={styles.footer}>
-                        <Text style={styles.textFooterLeft} onPress={() => { navigation.navigate('Auth_login1') }}>Đăng nhập</Text>
-                        <Text style={styles.textFooterRight} onPress={() => { navigation.navigate('Auth_forgotpassword1') }}>Quên mật khẩu</Text>
-
-                    </View>
-                </View>
-            </SafeAreaView>
-            <SafeAreaView edges={["bottom"]}
-                style={{ flex: 0, backgroundColor: "#ECEFF2" }} />
-
-        </View>
+            </View>
         </>
     )
 }

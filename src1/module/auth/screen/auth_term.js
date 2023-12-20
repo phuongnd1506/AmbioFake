@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import SvgComponent from '../../../asset/SVG/SvgComponent';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Header } from '../../component1';
+import Header from '../../../uicore/header.js';
 
 
 function Auth_term({ navigation }) {

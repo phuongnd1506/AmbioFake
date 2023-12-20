@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
     Image,
 
@@ -18,77 +18,102 @@ import { TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
-import { Button, Header } from '../../component1';
-import { TextInputLogin } from '../../component1/Input';
-
+import Button from '../../../uicore/button.js';
+import Header from '../../../uicore/header.js';
+import TextInputLogin from '../../../uicore/input.js';
+import { ValidateCode } from '../../../lib/validate.js';
 
 
 
 function Auth_forgotpassword2({ navigation, route }) {
-    const [code, setCode] = useState('')
-    const [isValidPhone, setValidPhone] = useState(true)
-    const [errorMessage, setErrorMessage] = useState('')
+    const inputRef = useRef(null);
 
-    const verifyPhoneNumber3 = (e) => {
-        setCode(e);
-        if (!e) {
-            setErrorMessage('Vui lòng nhập mã xác nhận');
-            setValidPhone(false);
-            return;
+    const getDataa = () => {
+        if(inputRef.current.getData()){
+            const data = inputRef.current.getData();
+            
+           
+
+           // Submit(navigation, data);
+           
         }
-
-        let formData = {
-            pphone: e
-        }
-
-        if (code) {
-            setErrorMessage('');
-            setValidPhone(true)
-
-        }
+           
+          if(inputRef.current.getData() == ""){
+            console.log(5464564564)
+             inputRef.current.showError("Vui lòng nhập mã xác nhận")
+          }
+    
     }
 
 
-    const handleButtonClick = () => {
-        Keyboard.dismiss();
-    };
-
-
-    const { authh } = route.params
-    const { tokenn } = route.params
-
-    const submit = () => {
-
-
-        console.log(authh)
-        console.log(code);
-        console.log(tokenn)
-
-        //http://192.168.86.20:3000/api/v1/users/verifyCode
-        if (isValidPhone && code) {
-            axios.post('https://ambio.vercel.app/api/v1/users/verifyCode', { "phoneNumber": authh, "code": Number.parseInt(code), "token": tokenn })
-                .then(res => {
-                    console.log(res.data)
-                    navigation.navigate('Auth_forgotpassword3', { authh, tokenn })
-                })
-                .catch(error => console.log(error.response.data))
-
-                ;
-        }
-        verifyPhoneNumber3(code);
-
-        if (!isValidPhone) {
-            return;
-        }
-    }
+    
 
 
 
+    // const [code, setCode] = useState('')
+    // const [isValidPhone, setValidPhone] = useState(true)
+    // const [errorMessage, setErrorMessage] = useState('')
 
-    const submitAll = () => {
-        handleButtonClick()
-        submit()
-    }
+    // const verifyPhoneNumber3 = (e) => {
+    //     setCode(e);
+    //     if (!e) {
+    //         setErrorMessage('Vui lòng nhập mã xác nhận');
+    //         setValidPhone(false);
+    //         return;
+    //     }
+
+    //     let formData = {
+    //         pphone: e
+    //     }
+
+    //     if (code) {
+    //         setErrorMessage('');
+    //         setValidPhone(true)
+
+    //     }
+    // }
+
+
+    // const handleButtonClick = () => {
+    //     Keyboard.dismiss();
+    // };
+
+
+    // const { authh } = route.params
+    // const { tokenn } = route.params
+
+    // const submit = () => {
+
+
+    //     console.log(authh)
+    //     console.log(code);
+    //     console.log(tokenn)
+
+    //     //http://192.168.86.20:3000/api/v1/users/verifyCode
+    //     if (isValidPhone && code) {
+    //         axios.post('https://ambio.vercel.app/api/v1/users/verifyCode', { "phoneNumber": authh, "code": Number.parseInt(code), "token": tokenn })
+    //             .then(res => {
+    //                 console.log(res.data)
+    //                 navigation.navigate('Auth_forgotpassword3', { authh, tokenn })
+    //             })
+    //             .catch(error => console.log(error.response.data))
+
+    //             ;
+    //     }
+    //     verifyPhoneNumber3(code);
+
+    //     if (!isValidPhone) {
+    //         return;
+    //     }
+    // }
+
+
+
+
+    // const submitAll = () => {
+    //     handleButtonClick()
+    //     submit()
+    // }
 
 
     return (
@@ -106,10 +131,10 @@ function Auth_forgotpassword2({ navigation, route }) {
                         <View style={styles.logo}>
                         </View>
                         <View style={styles.register}>
-                            <Text style={styles.TextInput}>Mã xác nhận sẽ được gửi số điện thoại {authh} , vui lòng kiểm tra và nhận mã xác nhận để tiếp tục</Text>
-                            <TextInputLogin validate={verifyPhoneNumber3} isValidPhonee={isValidPhone} errorM={errorMessage} phone={code} />
+                            <Text style={styles.TextInput}>Mã xác nhận sẽ được gửi số điện thoại , vui lòng kiểm tra và nhận mã xác nhận để tiếp tục</Text>
+                            <TextInputLogin ref={inputRef} placeholder="Nhập mã xác nhận" Validate = {ValidateCode} keyboardType="numeric"/>
 
-                            <Button textButton="XÁC NHẬN" Submit={submitAll} />
+                            <Button textButton="XÁC NHẬN" Submit={getDataa} />
 
                         </View>
 

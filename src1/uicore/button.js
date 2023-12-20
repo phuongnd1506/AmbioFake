@@ -13,11 +13,11 @@ import {
   } from 'react-native';
 
 
-function Button({textButton, onNextPress, Submit}){
+function Button({textButton, Submit}){
    return(
          <View style= {styles.container}>
             
-            <TouchableOpacity style={styles.button} onPress={Submit }>
+            <TouchableOpacity style={styles.button} onPress={Submit}>
                          <Text style = {styles.textButton}>{textButton}</Text>
                      
             </TouchableOpacity>

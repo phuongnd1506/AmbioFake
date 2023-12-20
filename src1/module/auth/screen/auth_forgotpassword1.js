@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
     Image,
 
@@ -18,111 +18,104 @@ import { TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
-import { Button, Header } from '../../component1';
-import { TextInputLogin } from '../../component1/Input';
-
+import Button from '../../../uicore/button.js';
+import Header from '../../../uicore/header.js';
+import TextInputLogin from '../../../uicore/input.js';
+import { ValidatePhone } from '../../../lib/validate.js';
 
 
 function Auth_forgotpassword1({ navigation }) {
 
+    const inputRef = useRef(null);
 
-    const [phone, setPhone] = useState('')
-    const [isValidPhone, setValidPhone] = useState(true)
-    const [errorMessage, setErrorMessage] = useState('')
+    const getDataa = () => {
+        if(inputRef.current.getData()){
+            const data = inputRef.current.getData();
+            
+           
 
-
-
-    const verifyPhoneNumber3 = (e) => {
-        setPhone(e);
-        if (!e) {
-            setErrorMessage('Vui lòng nhập số điện thoại');
-            setValidPhone(false);
-            return;
+            Submit(navigation, data);
+           
         }
-
-        let formData = {
-            pphone: e
-        }
-
-        let regex = new RegExp(/^([\+84|84|0]+(3|5|7|8|9|1[2|6|8|9]))+([0-9]{8,13})$/)
-        if (!regex.test(formData.pphone)) {
-            setErrorMessage('Số điện thoại không hợp lệ');
-            setValidPhone(false);
-
-        } else {
-            setValidPhone(true);
-            setErrorMessage('');
-
-        }
+           
+          if(inputRef.current.getData() == ""){
+            console.log(5464564564)
+             inputRef.current.showError("Vui lòng nhập số điện thoại")
+          }
+    
     }
+       
+
+
+   
 
     const handleButtonClick = () => {
         Keyboard.dismiss();
     };
 
 
-    const submit = () => {
-        console.log(phone)
-        const showToast = () => {
-            Toast.show({
-                type: "error",
-                text1: "Thông báo",
-                text2: `Không tồn tại số điện thoại ${phoneeeee}`,
-                autoHide: true,
-                position: 'top',
-                visibilityTime: 2500,
-                topOffset: 0,
+    // const submit = () => {
+    //     console.log(phone)
+    //     const showToast = () => {
+    //         Toast.show({
+    //             type: "error",
+    //             text1: "Thông báo",
+    //             text2: `Không tồn tại số điện thoại ${phoneeeee}`,
+    //             autoHide: true,
+    //             position: 'top',
+    //             visibilityTime: 2500,
+    //             topOffset: 0,
 
-            })
-        }
+    //         })
+    //     }
 
-        const showToast1 = () => {
-            Toast.show({
-                type: "error",
-                text1: "Thông báo",
-                text2: `${phoneeeee} không phải là số điện thoại`,
-                autoHide: true,
-                position: 'top',
-                visibilityTime: 2500,
-                topOffset: 0,
+    //     const showToast1 = () => {
+    //         Toast.show({
+    //             type: "error",
+    //             text1: "Thông báo",
+    //             text2: `${phoneeeee} không phải là số điện thoại`,
+    //             autoHide: true,
+    //             position: 'top',
+    //             visibilityTime: 2500,
+    //             topOffset: 0,
 
-            })
-        }
+    //         })
+    //     }
 
-        const phoneee = `Không tồn tại số điện thoại ${phone}`
-        const phoneeee = phoneee.slice(29)
-        const phoneeeee = `+84${phoneeee}`
+    //     const phoneee = `Không tồn tại số điện thoại ${phone}`
+    //     const phoneeee = phoneee.slice(29)
+    //     const phoneeeee = `+84${phoneeee}`
 
 
-        //http://192.168.86.20:3000/api/v1/users/forgotPassword
-        if (isValidPhone && phone) {
-            axios.post('https://ambio.vercel.app/api/v1/users/forgotPassword	', { "phoneNumber": phone })
-                .then(res => {
-                    navigation.navigate('Auth_forgotpassword2', { authh: phone, tokenn: res.data.token })
-                    console.log(res.data)
+    //     //http://192.168.86.20:3000/api/v1/users/forgotPassword
+    //     if (isValidPhone && phone) {
+    //         axios.post('https://ambio.vercel.app/api/v1/users/forgotPassword	', { "phoneNumber": phone })
+    //             .then(res => {
+    //                 navigation.navigate('Auth_forgotpassword2', { authh: phone, tokenn: res.data.token })
+    //                 console.log(res.data)
 
-                })
-                .catch(function (error) {
-                    console.log(error.response.data)
-                    if (error.response.data.errCode == 'AMBIO004') {
-                        showToast()
-                    }
-                    if (error.response.data.errCode == 'AMBIO002') {
-                        showToast1()
-                    }
-                });
-        }
-        verifyPhoneNumber3(phone);
+    //             })
+    //             .catch(function (error) {
+    //                 console.log(error.response.data)
+    //                 if (error.response.data.errCode == 'AMBIO004') {
+    //                     showToast()
+    //                 }
+    //                 if (error.response.data.errCode == 'AMBIO002') {
+    //                     showToast1()
+    //                 }
+    //             });
+    //     }
+    //     verifyPhoneNumber3(phone);
 
-        if (!isValidPhone) {
-            return;
-        }
-    };
+    //     if (!isValidPhone) {
+    //         return;
+    //     }
+    // };
 
-    const submitAll = () => {
-        handleButtonClick()
-        submit()
-    }
+    // const submitAll = () => {
+    //     handleButtonClick()
+    //     submit()
+    // }
 
 
 
@@ -143,9 +136,9 @@ function Auth_forgotpassword1({ navigation }) {
                         </View>
                         <View style={styles.register}>
                             <Text style={styles.TextInput}>Nhập số điện thoại của bạn để tiếp tục</Text>
-                            <TextInputLogin validate={verifyPhoneNumber3} isValidPhonee={isValidPhone} errorM={errorMessage} phone={phone} />
+                            <TextInputLogin ref={inputRef} placeholder="Số điện thoại" Validate = {ValidatePhone} keyboardType="numeric"/>
 
-                            <Button textButton="QUÊN MẬT KHẨU" Submit={submitAll} />
+                            <Button textButton="QUÊN MẬT KHẨU" Submit={getDataa} />
 
                         </View>
 

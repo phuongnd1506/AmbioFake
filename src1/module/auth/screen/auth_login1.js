@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
     Image,
 
@@ -18,125 +18,71 @@ import { TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
-import Button from '../../component1/Button';
-import { TextInputLogin } from '../../component1/Input';
-
+import Button from '../../../uicore/button.js';
+import TextInputLogin from '../../../uicore/input.js';
+import { SubmitLogin1 } from '../ulti/API.js';
+import { ValidatePhone } from '../../../lib/validate.js';
 
 
 function Auth_login1({ navigation }) {
+    const inputRef = useRef(null);
 
-    const [isValidPhone, setValidPhone] = useState(true)
-    const [errorMessage, setErrorMessage] = useState('')
-    const [phone, setPhone] = useState('')
+    const getDataa = () => {
+        if(inputRef.current.getData()){
+            const data = inputRef.current.getData();
+            
+           
 
-
-
-    const verifyPhoneNumber3 = (e) => {
-        setPhone(e);
-        if (!e) {
-            setErrorMessage('Vui lòng nhập số điện thoại');
-            setValidPhone(false);
-
-            return;
+            SubmitLogin1(navigation, data);
+           
         }
-
-        let formData = {
-            pphone: e
-        }
-
-        let regex = new RegExp(/^([\+84|84|0]+(3|5|7|8|9|1[2|6|8|9]))+([0-9]{8,13})$/)
-        if (!regex.test(formData.pphone)) {
-            setErrorMessage('Số điện thoại không hợp lệ');
-            setValidPhone(false);
-
-        } else {
-            setValidPhone(true);
-            setErrorMessage('');
-
-
-        }
-
+           
+          if(inputRef.current.getData() == ""){
+            console.log(5464564564)
+             inputRef.current.showError("Vui lòng nhập số điện thoại")
+          }
+    
     }
+       
+      
+
+    // const handleButtonClick = () => {
+    //     Keyboard.dismiss();
+    // };
+
+    
 
 
+    // const showToast = () => {
+    //     Toast.show({
+    //         type: "error",
+    //         text1: "Thông báo",
+    //         text2: `${phoneeeee} không phải là số điện thoại`,
+    //         autoHide: true,
+    //         position: 'top',
+    //         visibilityTime: 2500,
+    //         topOffset: 0,
 
-    const handleButtonClick = () => {
-        Keyboard.dismiss();
-    };
+    //     })
+    // }
 
-    const submit = () => {
-        console.log(phone)
-        if (isValidPhone && phone) {
-            axios.post('https://ambio.vercel.app/api/v1/users/verifyPhoneNumber', {
-                "phoneNumber": phone,
+    // const showToast1 = () => {
+    //     Toast.show({
+    //         type: "error",
+    //         text1: "Thông báo",
+    //         text2: "Số điện thoại chưa đăng ký, vui lòng đăng ký tài khoản mới",
+    //         autoHide: true,
+    //         position: 'top',
+    //         visibilityTime: 2500,
+    //         topOffset: 0,
 
-            }).then(res => {
-
-                navigation.navigate('Auth_login2', { auth: phone })
-
-            })
-                .catch(function (error) {
-                    console.log(error)
-
-                    if (error.response.data.errCode == "AMBIO002") {
-                        if (!phone) {
-                            return null
-                        } else {
-                            showToast()
-                        }
-
-                    }
-                    if (error.response.data.errCode == "AMBIO004") {
-                        showToast1()
-                    }
-                });
-
-        }
-
-        verifyPhoneNumber3(phone);
-
-        if (!isValidPhone) {
-            return;
-        }
-
-    }
-
-    const submitAll = () => {
-        handleButtonClick()
-        submit()
-    }
+    //     })
+    // }
 
 
-    const showToast = () => {
-        Toast.show({
-            type: "error",
-            text1: "Thông báo",
-            text2: `${phoneeeee} không phải là số điện thoại`,
-            autoHide: true,
-            position: 'top',
-            visibilityTime: 2500,
-            topOffset: 0,
-
-        })
-    }
-
-    const showToast1 = () => {
-        Toast.show({
-            type: "error",
-            text1: "Thông báo",
-            text2: "Số điện thoại chưa đăng ký, vui lòng đăng ký tài khoản mới",
-            autoHide: true,
-            position: 'top',
-            visibilityTime: 2500,
-            topOffset: 0,
-
-        })
-    }
-
-
-    const phoneee = `Không tồn tại số điện thoại ${phone}`
-    const phoneeee = phoneee.slice(29)
-    const phoneeeee = `+84${phoneeee}`
+    // const phoneee = `Không tồn tại số điện thoại ${phone}`
+    // const phoneeee = phoneee.slice(29)
+    // const phoneeeee = `+84${phoneeee}`
 
 
 
@@ -162,8 +108,8 @@ function Auth_login1({ navigation }) {
                         </View>
                         <View style={styles.login}>
                             <Text style={styles.TextInput}>Nhập số điện thoại của bạn để đăng nhập</Text>
-                            <TextInputLogin validate={verifyPhoneNumber3} isValidPhonee={isValidPhone} errorM={errorMessage} phone={phone} />
-                            <Button textButton="TIẾP TỤC" Submit={submitAll} />
+                            <TextInputLogin ref={inputRef} placeholder="Số điện thoại" Validate = {ValidatePhone} keyboardType="numeric"/>
+                            <Button textButton="TIẾP TỤC" Submit={getDataa} />
                         </View>
 
 

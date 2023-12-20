@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
   Image,
- 
+
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -9,7 +9,7 @@ import {
   TextInput,
   TouchableOpacity,
   useColorScheme,
-  
+
   View,
   Fragment
 } from 'react-native';
@@ -40,73 +40,74 @@ function Login({ navigation }) {
 
   const submit = () => {
 
-    
+
     //http://192.168.86.20:3000/api/v1/users/verifyPhoneNumber
     axios.post('https://ambio.vercel.app/api/v1/users/verifyPhoneNumber', {
       "phoneNumber": phone,
-      
+
     }).then(res => {
 
-       isValidPhone ? navigation.navigate('Authenticatelogin', {auth: phone}) : null;
+      isValidPhone ? navigation.navigate('Authenticatelogin', { auth: phone }) : null;
 
     }
     )
-    .catch(function (error) {
-      console.log(error)
-      console.log(error.response.data)
-      if (error.response.data.errCode == "AMBIO002") {
-             if(!phone){
-                   return null
-             } else{
-                isValidPhone ? showToast() : null}
-   
-      }
-      if (error.response.data.errCode == "AMBIO004") {
-                             showToast1();
-      }
-    });
-   const showToast = () => {
-     Toast.show({
-       type: "error",
-       text1: "Thông báo",
-       text2: `${phoneeee} không phải là số điện thoại`,
-       autoHide: true,
-       position: 'top',
-       visibilityTime: 2500,
-       topOffset: 0,
-       
-     })
-   }
+      .catch(function (error) {
+        console.log(error)
+        console.log(error.response.data)
+        if (error.response.data.errCode == "AMBIO002") {
+          if (!phone) {
+            return null
+          } else {
+            isValidPhone ? showToast() : null
+          }
 
-   const showToast1 = () => {
-    Toast.show({
-      type: "error",
-      text1: "Thông báo",
-      text2: "Số điện thoại chưa đăng ký, vui lòng đăng ký tài khoản mới",
-      autoHide: true,
-      position: 'top',
-      visibilityTime: 2500,
-      topOffset: 0,
-      
-    })
-  }
+        }
+        if (error.response.data.errCode == "AMBIO004") {
+          showToast1();
+        }
+      });
+    const showToast = () => {
+      Toast.show({
+        type: "error",
+        text1: "Thông báo",
+        text2: `${phoneeee} không phải là số điện thoại`,
+        autoHide: true,
+        position: 'top',
+        visibilityTime: 2500,
+        topOffset: 0,
+
+      })
+    }
+
+    const showToast1 = () => {
+      Toast.show({
+        type: "error",
+        text1: "Thông báo",
+        text2: "Số điện thoại chưa đăng ký, vui lòng đăng ký tài khoản mới",
+        autoHide: true,
+        position: 'top',
+        visibilityTime: 2500,
+        topOffset: 0,
+
+      })
+    }
 
 
-  const phonee = `Không tồn tại số điện thoại ${phone}`
-    const phoneee = phonee.slice(29 )
+    const phonee = `Không tồn tại số điện thoại ${phone}`
+    const phoneee = phonee.slice(29)
     const phoneeee = `+84${phoneee}`
-   
-   
+
+
     verifyPhoneNumber3(phone);
 
     if (!isValidPhone) {
       return;
     }
 
-    console.log(phone); 
-    
-    
-        
+    console.log(phone);
+
+
+
   };
 
   const verifyPhoneNumber3 = (e) => {
@@ -133,33 +134,33 @@ function Login({ navigation }) {
 
   return (
 
-    
-   <View style={styles.container}> 
-    <SafeAreaView  edges={["left", "right", "top"]}
-            style={{
-            flex: 1,
-            backgroundColor: "#00C853",
-            position: 'relative'
-                  }}>
-      
-        <View style= {styles.header}>
-    
+
+    <View style={styles.container}>
+      <SafeAreaView edges={["left", "right", "top"]}
+        style={{
+          flex: 1,
+          backgroundColor: "#00C853",
+          position: 'relative'
+        }}>
+
+        <View style={styles.header}>
+
         </View>
         <View style={styles.body}>
-        <Toast/>
+          <Toast />
           <View style={styles.logo}>
             <Image source={require('../../asset/ambio_1628393628-removebg-preview.png')}
               style={{ width: 200, height: 200 }}
-              
+
             />
           </View>
           <View style={styles.login}>
             <Text style={styles.TextInput}>Nhập số điện thoại của bạn để đăng nhập</Text>
             <TextInput placeholder='Số điện thoại'
               style={
-                isValidPhone 
-                  ? {...styles.input}
-                  : {...styles.input, ...styles.invalid}
+                isValidPhone
+                  ? { ...styles.input }
+                  : { ...styles.input, ...styles.invalid }
               }
               keyboardType='numeric'
 
@@ -170,12 +171,12 @@ function Login({ navigation }) {
 
             />
             <Text style={{ fontSize: 16, color: 'red', marginTop: 4 }}>{isValidPhone ? '' : errorMessage}</Text>
-            
-            <TouchableOpacity style={styles.button} onPress={() => {submit(); handleButtonClick()} } >
+
+            <TouchableOpacity style={styles.button} onPress={() => { submit(); handleButtonClick() }} >
               <Text style={styles.textButton}>TIẾP TỤC</Text>
             </TouchableOpacity>
-            
-            
+
+
           </View>
 
           <View style={styles.footer}>
@@ -185,36 +186,36 @@ function Login({ navigation }) {
           </View>
 
         </View>
-      
-    </SafeAreaView>
-    <SafeAreaView  edges={["bottom"]}
-              style={{ flex: 0, backgroundColor: "#ECEFF2" }}/>
-    
-     </View>
-   
+
+      </SafeAreaView>
+      <SafeAreaView edges={["bottom"]}
+        style={{ flex: 0, backgroundColor: "#ECEFF2" }} />
+
+    </View>
+
 
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    
+
     flex: 1,
     backgroundColor: '#00C853',
-  
+
     // position: 'relative'
 
   },
 
-  header:{
-       height: 32,
-       backgroundColor: '#00C853',
-       
+  header: {
+    height: 32,
+    backgroundColor: '#00C853',
+
   },
 
   body: {
     flex: 1,
-    
+
     borderTopRightRadius: 26,
     borderTopLeftRadius: 26,
     backgroundColor: '#ECEFF2',
@@ -241,7 +242,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingLeft: 20,
     paddingRight: 20,
-    color : 'black'
+    color: 'black'
   },
   TextInput: {
     marginBottom: 10,
@@ -285,9 +286,9 @@ const styles = StyleSheet.create({
     bottom: 0
   },
 
-  invalid:{
-    color:'red', 
-    borderWidth: 1, 
+  invalid: {
+    color: 'red',
+    borderWidth: 1,
     borderColor: 'red'
   }
 });
