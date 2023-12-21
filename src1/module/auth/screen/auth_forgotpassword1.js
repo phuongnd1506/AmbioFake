@@ -22,36 +22,33 @@ import Button from '../../../uicore/button.js';
 import Header from '../../../uicore/header.js';
 import TextInputLogin from '../../../uicore/input.js';
 import { ValidatePhone } from '../../../lib/validate.js';
+import { getDataaPhoneForgotPassword } from '../unti/unti.js';
 
 
 function Auth_forgotpassword1({ navigation }) {
 
     const inputRef = useRef(null);
 
-    const getDataa = () => {
-        if(inputRef.current.getData()){
-            const data = inputRef.current.getData();
+    // const getDataa = () => {
+    //     if(inputRef.current.getData()){
+    //         const data = inputRef.current.getData();
             
            
 
-            Submit(navigation, data);
+    //         Submit(navigation, data);
            
-        }
+    //     }
            
-          if(inputRef.current.getData() == ""){
-            console.log(5464564564)
-             inputRef.current.showError("Vui lòng nhập số điện thoại")
-          }
+    //       if(inputRef.current.getData() == ""){
+    //         console.log(5464564564)
+    //          inputRef.current.showError("Vui lòng nhập số điện thoại")
+    //       }
     
-    }
+    // }
        
 
 
    
-
-    const handleButtonClick = () => {
-        Keyboard.dismiss();
-    };
 
 
     // const submit = () => {
@@ -138,15 +135,15 @@ function Auth_forgotpassword1({ navigation }) {
                             <Text style={styles.TextInput}>Nhập số điện thoại của bạn để tiếp tục</Text>
                             <TextInputLogin ref={inputRef} placeholder="Số điện thoại" Validate = {ValidatePhone} keyboardType="numeric"/>
 
-                            <Button textButton="QUÊN MẬT KHẨU" Submit={getDataa} />
+                            <Button textButton="QUÊN MẬT KHẨU" Submit={() => getDataaPhoneForgotPassword(navigation, inputRef)} />
 
                         </View>
 
 
 
                         <View style={styles.footer}>
-                            <Text style={styles.textFooterLeft} onPress={() => { navigation.navigate('Auth_login1') }}>Đăng nhập</Text>
-                            <Text style={styles.textFooterRight} onPress={() => { navigation.navigate('Auth_register1') }}>Đăng ký</Text>
+                            <Text style={styles.textFooterLeft} onPress={() => { navigation.navigate('auth_login1') }}>Đăng nhập</Text>
+                            <Text style={styles.textFooterRight} onPress={() => { navigation.navigate('auth_register1') }}>Đăng ký</Text>
 
                         </View>
                     </View>

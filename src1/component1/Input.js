@@ -54,7 +54,7 @@ export const TextInputLogin = ({ validate, errorM, isValidPhonee, phone }) => {
 
 
 export const TextInputLogin2 = ({ validate, errorM, isValidPhonee, phone }) => {
-
+  const [isEye, setIsEye] = useState(false)
   const [hidePassword, setHidePassword] = useState(true)
 
   const managePasswordVisibility = () => {
@@ -83,9 +83,8 @@ export const TextInputLogin2 = ({ validate, errorM, isValidPhonee, phone }) => {
         returnKeyType="send"
         secureTextEntry={hidePassword}
 
-
       />
-
+      {isEye} ?
       <TouchableOpacity
         activeOpacity={0.8}
         style={styles.visibilityBtn}
@@ -93,7 +92,7 @@ export const TextInputLogin2 = ({ validate, errorM, isValidPhonee, phone }) => {
       >
         <Image source={hidePassword ? require('../../asset/eye.png') : require('../../asset/hidden.png')} style={styles.btnImage} />
 
-      </TouchableOpacity>
+      </TouchableOpacity> : null
       <Text style={{ fontSize: 16, color: 'red', bottom: 12 }}>{isValidPhonee ? '' : errorM}</Text>
     </View>
   )

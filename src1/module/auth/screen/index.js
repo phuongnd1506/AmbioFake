@@ -23,12 +23,13 @@ import Auth_forgotpassword2 from './auth_forgotpassword2';
 import Auth_forgotpassword3 from './auth_forgotpassword3';
 import Auth_term from './auth_term';
 import App_manage from '../../app/screen/app_manage';
-import { SubmitLogin1 } from '../ulti/API.js';
+import { SubmitLogin1 } from '../unti/API.js';
+import { Logout } from '../../app/unti/API.js';
 
 import messaging from '@react-native-firebase/messaging';
 import { AppRegistry } from 'react-native';
 import { PermissionsAndroid } from 'react-native';
-
+import { GetDataaPhoneLogin } from '../unti/unti';
 
 PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
 messaging().setBackgroundMessageHandler(async remoteMessage => {
@@ -39,7 +40,7 @@ AppRegistry.registerComponent('Maine', () => Maine);
 
 
 const Stack = createNativeStackNavigator();
-function Index({init}) {
+function IndexInAuth({init}) {
   
   async function requestUserPermission() {
     const authStatus = await messaging().requestPermission();
@@ -70,7 +71,6 @@ function Index({init}) {
         
       <Stack.Navigator initialRouteName="auth_login1" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="auth_login1" component={Auth_login1} />
-        <Stack.Screen name="app_manage" component={App_manage}/>
         <Stack.Screen name="auth_register1" component={Auth_register1} />
         <Stack.Screen name="auth_forgotpassword1" component={Auth_forgotpassword1} />
         <Stack.Screen name="auth_login2" component={Auth_login2} />
@@ -79,10 +79,9 @@ function Index({init}) {
         <Stack.Screen name="auth_forgotpassword2" component={Auth_forgotpassword2} />
         <Stack.Screen name="auth_forgotpassword3" component={Auth_forgotpassword3} />
         <Stack.Screen name="auth_term" component={Auth_term}/>
-    
-        <Stack.Screen name="Submit" component={SubmitLogin1}/>
-
-        
+        <Stack.Screen name="Logout" component = {Logout} />
+        <Stack.Screen name="GetDataaPhoneLogin" component={GetDataaPhoneLogin}/>
+       
        
       </Stack.Navigator>
 
@@ -96,4 +95,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default Index;
+export default IndexInAuth;

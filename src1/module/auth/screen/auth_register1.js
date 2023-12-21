@@ -22,6 +22,7 @@ import Button from '../../../uicore/button.js';
 import Header from '../../../uicore/header.js';
 import TextInputLogin from '../../../uicore/input.js';
 import { ValidatePhone } from '../../../lib/validate.js';
+import { getDataaPhoneRegister } from '../unti/unti.js';
 
 
 function Auth_register1({ navigation }) {
@@ -29,22 +30,22 @@ function Auth_register1({ navigation }) {
 
     const inputRef = useRef(null);
 
-    const getDataa = () => {
-        if(inputRef.current.getData()){
-            const data = inputRef.current.getData();
+    // const getDataa = () => {
+    //     if(inputRef.current.getData()){
+    //         const data = inputRef.current.getData();
             
            
 
-           // Submit(navigation, data);
+    //        // Submit(navigation, data);
            
-        }
+    //     }
            
-          if(inputRef.current.getData() == ""){
-            console.log(5464564564)
-             inputRef.current.showError("Vui lòng nhập số điện thoại")
-          }
+    //       if(inputRef.current.getData() == ""){
+    //         console.log(5464564564)
+    //          inputRef.current.showError("Vui lòng nhập số điện thoại")
+    //       }
     
-    }
+    // }
     // const [phone, setPhone] = useState('')
     // const [isValidPhone, setValidPhone] = useState(true)
     // const [errorMessage, setErrorMessage] = useState('')
@@ -184,16 +185,16 @@ function Auth_register1({ navigation }) {
                         <View style={styles.register}>
                             <Text style={styles.TextInput}>Nhập số điện thoại của bạn sau đó tiếp tục</Text>
                             <TextInputLogin ref={inputRef} placeholder="Số điện thoại" Validate = {ValidatePhone} keyboardType="numeric"/>
-                            <Text style={styles.rules}>Bạn bấm tiếp tục là đồng nghĩa với việc chấp nhận <Text style={{ textDecorationLine: 'underline', color: '#228B22' }} onPress={() => { navigation.navigate('Auth_term') }}>điều khoản của chúng tôi</Text></Text>
-                            <Button textButton="ĐĂNG KÝ" Submit={getDataa} />
+                            <Text style={styles.rules}>Bạn bấm tiếp tục là đồng nghĩa với việc chấp nhận <Text style={{ textDecorationLine: 'underline', color: '#228B22' }} onPress={() => { navigation.navigate('auth_term') }}>điều khoản của chúng tôi</Text></Text>
+                            <Button textButton="ĐĂNG KÝ" Submit={() => getDataaPhoneRegister(navigation, inputRef)} />
 
                         </View>
 
 
 
                         <View style={styles.footer}>
-                            <Text style={styles.textFooterLeft} onPress={() => { navigation.navigate('Auth_login1') }}>Đăng nhập</Text>
-                            <Text style={styles.textFooterRight} onPress={() => { navigation.navigate('Auth_forgotpassword1') }}>Quên mật khẩu</Text>
+                            <Text style={styles.textFooterLeft} onPress={() => { navigation.navigate('auth_login1') }}>Đăng nhập</Text>
+                            <Text style={styles.textFooterRight} onPress={() => { navigation.navigate('auth_forgotpassword1') }}>Quên mật khẩu</Text>
 
                         </View>
                     </View>

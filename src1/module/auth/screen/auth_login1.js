@@ -20,29 +20,28 @@ import axios from 'axios';
 import Toast from 'react-native-toast-message';
 import Button from '../../../uicore/button.js';
 import TextInputLogin from '../../../uicore/input.js';
-import { SubmitLogin1 } from '../ulti/API.js';
+import { SubmitLogin1 } from '../unti/API.js';
 import { ValidatePhone } from '../../../lib/validate.js';
-
+import { GetDataaPhoneLogin } from '../unti/unti.js';
+import { showToast } from '../../../uicore/toast.js';
 
 function Auth_login1({ navigation }) {
     const inputRef = useRef(null);
 
-    const getDataa = () => {
-        if(inputRef.current.getData()){
-            const data = inputRef.current.getData();
-            
+    // const getDataa = () => {
+    //     if(inputRef.current.getData()){
+    //         const data = inputRef.current.getData();
+                  
+    //         SubmitLogin1(navigation, data);
            
-
-            SubmitLogin1(navigation, data);
+    //     }
            
-        }
-           
-          if(inputRef.current.getData() == ""){
-            console.log(5464564564)
-             inputRef.current.showError("Vui lòng nhập số điện thoại")
-          }
+    //       if(inputRef.current.getData() == ""){
+    //         console.log(5464564564)
+    //          inputRef.current.showError("Vui lòng nhập số điện thoại")
+    //       }
     
-    }
+    // }
        
       
 
@@ -109,14 +108,14 @@ function Auth_login1({ navigation }) {
                         <View style={styles.login}>
                             <Text style={styles.TextInput}>Nhập số điện thoại của bạn để đăng nhập</Text>
                             <TextInputLogin ref={inputRef} placeholder="Số điện thoại" Validate = {ValidatePhone} keyboardType="numeric"/>
-                            <Button textButton="TIẾP TỤC" Submit={getDataa} />
+                            <Button textButton="TIẾP TỤC" Submit={() => GetDataaPhoneLogin(navigation, inputRef)} />
                         </View>
 
 
 
                         <View style={styles.footer}>
-                            <Text style={styles.textFooterRegister} onPress={() => { navigation.navigate('Auth_register1') }}>ĐĂNG KÝ TÀI KHOẢN</Text>
-                            <Text style={styles.textForgotPassword} onPress={() => { navigation.navigate('Auth_forgotpassword1') }}>Quên mật khẩu</Text>
+                            <Text style={styles.textFooterRegister} onPress={() => { navigation.navigate('auth_register1') }}>ĐĂNG KÝ TÀI KHOẢN</Text>
+                            <Text style={styles.textForgotPassword} onPress={() => { navigation.navigate('auth_forgotpassword1') }}>Quên mật khẩu</Text>
                             <Text style={styles.textVersion}>Phiên bản: 2.0.1.60 beta</Text>
                         </View>
                     </View>

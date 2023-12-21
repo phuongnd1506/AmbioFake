@@ -24,35 +24,38 @@ import TextInputLogin from '../../../uicore/input.js';
 import DeviceInfo from 'react-native-device-info';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ValidateCreatePassword } from '../../../lib/validate.js';
+import { getDataaPasswordForgotPassword } from '../unti/unti.js';
 
 
 
 function Auth_forgotpassword3({ navigation, route }) {
 
     const inputRef = useRef(null);
+    
   
-   
-    const getDataa = () => {
-        if (inputRef.current.getData()) {
-            const data = inputRef.current.getData();
-            console.log(data, 35435344635435)
+    const { tokenn } = route.params;
+    const { phone } = route.params;
 
-            // Submit(navigation, data);
+    
 
-        }
+    // useEffect(() => {getDeviceInfo()}, [])
+    // const getDataa = () => {
+    //     if (inputRef.current.getData()) {
+    //         const data = inputRef.current.getData();
+    //         console.log(data, 35435344635435)
 
-        if (inputRef.current.getData() == "") {
-            console.log(5464564564)
-            inputRef.current.showError("Vui lòng nhập mật khẩu")
+    //         // Submit(navigation, data);
+
+    //     }
+
+    //     if (inputRef.current.getData() == "") {
+    //         console.log(5464564564)
+    //         inputRef.current.showError("Vui lòng nhập mật khẩu")
            
-        }
+    //     }
 
-    }
+    // }
 
-    useEffect(() => {
-        inputRef.current.showEye(true)
-        inputRef.current.showPass(true)
-    })
 
     // const [newPassword, setNewPassword] = useState('')
     // const [isValidPhone, setValidPhone] = useState(true)
@@ -97,25 +100,25 @@ function Auth_forgotpassword3({ navigation, route }) {
 
 
 
-    const [deviceId, setdeviceId] = useState('')
-    const [deviceName, setdeviceName] = useState('')
-    const [deviceSystem, setdeviceSystem] = useState('')
+    // const [deviceId, setdeviceId] = useState('')
+    // const [deviceName, setdeviceName] = useState('')
+    // const [deviceSystem, setdeviceSystem] = useState('')
 
-    const handleButtonClick = () => {
-        Keyboard.dismiss();
-    };
+    // const handleButtonClick = () => {
+    //     Keyboard.dismiss();
+    // };
 
 
-    const getdeviceId = async () => {
-        var uniqueId = await DeviceInfo.getUniqueId();
-        var deviceNamee = await DeviceInfo.getDeviceName();
-        var deviceSystemm = await DeviceInfo.getSystemName();
-        setdeviceId(uniqueId)
-        setdeviceName(deviceNamee)
-        setdeviceSystem(deviceSystemm)
-    }
+    // const getdeviceId = async () => {
+    //     var uniqueId = await DeviceInfo.getUniqueId();
+    //     var deviceNamee = await DeviceInfo.getDeviceName();
+    //     var deviceSystemm = await DeviceInfo.getSystemName();
+    //     setdeviceId(uniqueId)
+    //     setdeviceName(deviceNamee)
+    //     setdeviceSystem(deviceSystemm)
+    // }
 
-    useEffect(() => { getdeviceId() }, [])
+    // useEffect(() => { getdeviceId() }, [])
 
     // const { authh } = route.params
     // const { tokenn } = route.params
@@ -185,15 +188,15 @@ function Auth_forgotpassword3({ navigation, route }) {
                             <Text style={styles.TextInput}>Tạo mật khẩu mới để tiếp tục (mật khẩu nên chứa các kí tự chữ, số và có tối thiểu 6 kí tự)</Text>
                             <TextInputLogin ref={inputRef} placeholder="Mật khẩu" Validate={ValidateCreatePassword} autoCompleteType="password" autoCapitalize="none" autoCorrect={false} returnKeyType="send"/>
 
-                            <Button textButton="TIẾP TỤC" Submit={getDataa} />
+                            <Button textButton="TIẾP TỤC" Submit={() => getDataaPasswordForgotPassword(phone, tokenn, inputRef)} />
 
                         </View>
 
 
 
                         <View style={styles.footer}>
-                            <Text style={styles.textFooterLeft} onPress={() => { navigation.navigate('Auth_login1') }}>Đăng nhập</Text>
-                            <Text style={styles.textFooterRight} onPress={() => { navigation.navigate('Auth_register1') }}>Đăng ký</Text>
+                            <Text style={styles.textFooterLeft} onPress={() => { navigation.navigate('auth_login1') }}>Đăng nhập</Text>
+                            <Text style={styles.textFooterRight} onPress={() => { navigation.navigate('auth_register1') }}>Đăng ký</Text>
 
                         </View>
                     </View>

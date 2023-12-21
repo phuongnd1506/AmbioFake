@@ -6,15 +6,16 @@ import { Image, FlatList } from "react-native";
 import axios from "axios"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
-import getToken from "../ulti";
-import { getUserInfo } from "../ulti/API.js";
-import { getHistoryLogin } from "../ulti/API.js";
-import { Logout } from "../ulti/API.js";
+import { getToken } from "../unti/unti.js";
+import { getUserInfo } from "../unti/API.js";
+import { getHistoryLogin } from "../unti/API.js";
+import { Logout } from "../unti/API.js";
+import { Logoutt, getdataHistorylogin, LogouttAll, onRefresh, getdataHistoryloginOnreFresh, getdataUserInfo } from "../unti/unti.js";
+
+
 
 function App_manage({ navigation }) {
 
-
-    const [history, setHistory] = useState('')
     const [infoUser, setInfoUser] = useState()
     const [historyLogins, setHistoryLogins] = useState([])
     const [isRefresh, setIsRefresh] = useState(false)
@@ -26,33 +27,43 @@ function App_manage({ navigation }) {
         setToken(tokenn)
     }
     useEffect(() => {
-
         getTokenn()
     })
 
-    // getInfoUser
-    const phoneNumberInfoUser = async (token) => {
-        const phoneNumberr = await getUserInfo(token);
-        setInfoUser(phoneNumberr)
-        console.log(phoneNumberr, "infoUserPhone")
-    }
-
-    // getHistoryLogin
-    const getHistoryLoginn = async (token) => {
-        const history = await getHistoryLogin(token);
-        setHistoryLogins(history)
-        console.log(history, "historyyyyyyyyLogin")
-    }
-
     useEffect(() => {
-        token && phoneNumberInfoUser(token), getHistoryLoginn(token)
+        token && getdataUserInfo(token, setInfoUser), getdataHistorylogin(token, setHistoryLogins)
     }, [token])
 
-   
+    const onRefreshh = (setHistoryLogins, setIsRefresh) => {
+        onRefresh(setIsRefresh)
+        getdataHistoryloginOnreFresh(setHistoryLogins, setIsRefresh)
+    }
+
+
+    const appState = useRef(AppState.currentState);
+    const [appStateVisible, setAppStateVisible] = useState(appState.current);
+
+    useEffect(() => {
+        const subscription = AppState.addEventListener('change', nextAppState => {
+            if (
+                appState.current.match(/inactive|background/) &&
+                nextAppState === 'active'
+            ) {
+                onRefreshh(setHistoryLogins, setIsRefresh)
+            }
+            onRefreshh(setHistoryLogins, setIsRefresh)
+
+        });
+
+        return () => {
+            subscription.remove();
+        };
+    }, []);
+
 
 
     //logout
-    
+
     // //AppState
 
     // const appState = useRef(AppState.currentState);
@@ -332,11 +343,6 @@ function App_manage({ navigation }) {
     // }
 
 
-    function addItem() {
-        setIsRefresh(true)
-        setTimeout(() => { setIsRefresh(false) }, 1000)
-    }
-
 
     return (
         <View style={styles.container}>
@@ -354,7 +360,7 @@ function App_manage({ navigation }) {
                 <View style={styles.body}>
                     <FlatList data={historyLogins}
                         refreshing={isRefresh}
-                        onRefresh={addItem}
+                        onRefresh={() => onRefreshh(setHistoryLogins, setIsRefresh)}
                         renderItem={(item, index) =>
 
 
@@ -371,7 +377,7 @@ function App_manage({ navigation }) {
                                 </View>
 
                                 <TouchableOpacity style={styles.itemRight}>
-                                    <Text style={styles.textItemRight} onPress={() => { Logout(token, item.item.clientID, item.item.isThisDevice, historyLogins, navigation) }}>Đăng xuất</Text>
+                                    <Text style={styles.textItemRight} onPress={() => { Logoutt(token, item.item.clientID, item.item.isThisDevice, historyLogins, navigation, setHistoryLogins) }}>Đăng xuất</Text>
                                 </TouchableOpacity>
 
                             </View>
@@ -381,7 +387,7 @@ function App_manage({ navigation }) {
                 </View>
                 <View style={styles.footer}>
                     <TouchableOpacity style={styles.buttonFooter}>
-                        <Text style={styles.textFooter} onPress={() => { twoOptionAlertHandlerAll() }}>ĐĂNG XUẤT TẤT CẢ</Text>
+                        <Text style={styles.textFooter} onPress={() => LogouttAll(token, historyLogins, navigation, setHistoryLogins)}>ĐĂNG XUẤT TẤT CẢ</Text>
                     </TouchableOpacity>
                 </View>
 

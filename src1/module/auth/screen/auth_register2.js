@@ -22,28 +22,32 @@ import Button from '../../../uicore/button.js';
 import Header from '../../../uicore/header.js';
 import TextInputLogin from '../../../uicore/input.js';
 import { ValidateCode } from '../../../lib/validate.js';
+import { getDataaCodeRegister } from '../unti/unti.js';
 
 
 
 
 function Auth_register2({ navigation, route }) {
     const inputRef = useRef(null);
-    const getDataa = () => {
-        if(inputRef.current.getData()){
-            const data = inputRef.current.getData();
+    const {phone} = route.params
+    const {tokenn} = route.params
+    console.log(phone,"phone registerrrrrrrrrrrrrrrr")
+    //  const getDataa = () => {
+    //      if(inputRef.current.getData()){
+    //          const data = inputRef.current.getData();
             
            
 
-           // Submit(navigation, data);
+    //          Submit(navigation, data);
            
-        }
+    //      }
            
-          if(inputRef.current.getData() == ""){
-            console.log(5464564564)
-             inputRef.current.showError("Vui lòng nhập mã xác nhận")
-          }
+    //        if(inputRef.current.getData() == ""){
+    //          console.log(5464564564)
+    //           inputRef.current.showError("Vui lòng nhập mã xác nhận")
+    //        }
     
-    }
+    //  }
      
 
     // const [code, setCode] = useState('')
@@ -137,18 +141,18 @@ function Auth_register2({ navigation, route }) {
                     <View style={styles.logo}>
                     </View>
                     <View style={styles.register}>
-                        <Text style={styles.TextInput}>Một mã xác nhận dùng để đăng ký đã được gửi đến số điện thoại: </Text>
+                        <Text style={styles.TextInput}>Một mã xác nhận dùng để đăng ký đã được gửi đến số điện thoại: {phone}</Text>
                         <TextInputLogin ref={inputRef} placeholder="Nhập mã xác nhận" Validate = {ValidateCode} keyboardType="numeric"/>
 
-                        <Button textButton="TIẾP TỤC" Submit={getDataa} />
+                        <Button textButton="TIẾP TỤC" Submit={() => getDataaCodeRegister(tokenn, phone, inputRef, navigation)} />
 
                     </View>
 
 
 
                     <View style={styles.footer}>
-                        <Text style={styles.textFooterLeft} onPress={() => { navigation.navigate('Auth_login1') }}>Đăng nhập</Text>
-                        <Text style={styles.textFooterRight} onPress={() => { navigation.navigate('Auth_forgotpassword1') }}>Quên mật khẩu</Text>
+                        <Text style={styles.textFooterLeft} onPress={() => { navigation.navigate('auth_login1') }}>Đăng nhập</Text>
+                        <Text style={styles.textFooterRight} onPress={() => { navigation.navigate('auth_forgotpassword1') }}>Quên mật khẩu</Text>
 
                     </View>
                 </View>

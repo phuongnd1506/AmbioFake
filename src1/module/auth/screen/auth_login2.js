@@ -22,9 +22,10 @@ import Button from '../../../uicore/button.js';
 import Header from '../../../component1/Header.js';
 import TextInputLogin from '../../../uicore/input.js';
 import DeviceInfo from 'react-native-device-info';
-import { Submit } from '../ulti/API.js';
+import { Submit } from '../unti/API.js';
 import { ValidatePassword } from '../../../lib/validate.js';
-import { SubmitLogin2 } from '../ulti/API.js';
+import { SubmitLogin2 } from '../unti/API.js';
+import { getDataaPasswordLogin } from '../unti/unti.js';
 
 
 
@@ -50,29 +51,22 @@ function Auth_login2({ navigation, route }) {
     const {auth} = route.params
     const inputRef = useRef(null);
   
-    const getDataa = () => {
-        if (inputRef.current.getData()) {
-            const data = inputRef.current.getData();
-            console.log(data, 35435344635435)
+    // const getDataa = () => {
+    //     if (inputRef.current.getData()) {
+    //         const data = inputRef.current.getData();
+    //         console.log(data, 35435344635435)
 
-             SubmitLogin2(navigation, data, auth, deviceId, deviceName, deviceSystem);
+    //          SubmitLogin2(navigation, data, auth, deviceId, deviceName, deviceSystem);
 
-        }
+    //     }
 
-        if (inputRef.current.getData() == "") {
-            console.log(5464564564)
-            inputRef.current.showError("Vui lòng nhập mật khẩu")    
-        }      
+    //     if (inputRef.current.getData() == "") {
+    //         console.log(5464564564)
+    //         inputRef.current.showError("Vui lòng nhập mật khẩu")    
+    //     }      
 
-    }
-    useEffect(() => {
-        inputRef.current.showEye(true)
-        inputRef.current.showPass(true)
-    })
-
-   
-
-
+    // 
+  
     // const handleButtonClick = () => {
     //     Keyboard.dismiss();
     // };
@@ -179,15 +173,15 @@ function Auth_login2({ navigation, route }) {
                             <Text style={styles.TextInput}>Nhập mật khẩu của bạn để đăng nhập</Text>
                             <TextInputLogin ref={inputRef} placeholder="Mật khẩu" Validate={ValidatePassword} autoCompleteType="password" autoCapitalize="none" autoCorrect={false} returnKeyType="send"/>
 
-                            <Button textButton="ĐĂNG NHẬP" Submit={getDataa} />
+                            <Button textButton="ĐĂNG NHẬP" Submit={() => getDataaPasswordLogin(inputRef, navigation, auth,  deviceId, deviceName, deviceSystem)} />
 
                         </View>
 
 
 
                         <View style={styles.footer}>
-                            <Text style={styles.textFooterLeft} onPress={() => { navigation.navigate('Auth_register1') }}>Đăng ký</Text>
-                            <Text style={styles.textFooterRight} onPress={() => { navigation.navigate('Auth_forgotpassword1') }}>Quên mật khẩu</Text>
+                            <Text style={styles.textFooterLeft} onPress={() => { navigation.navigate('auth_register1') }}>Đăng ký</Text>
+                            <Text style={styles.textFooterRight} onPress={() => { navigation.navigate('auth_forgotpassword1') }}>Quên mật khẩu</Text>
 
                         </View>
                     </View>

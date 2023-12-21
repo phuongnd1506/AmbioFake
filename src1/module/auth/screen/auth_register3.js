@@ -27,34 +27,43 @@ import { AppRegistry } from 'react-native';
 import { PermissionsAndroid } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ValidateCreatePassword } from '../../../lib/validate.js';
+import { getDataaPasswordRegister } from '../unti/unti.js';
 
 
 function Auth_register3({ navigation, route }) {
 
     const inputRef = useRef(null);
-  
-   
-    const getDataa = () => {
-        if (inputRef.current.getData()) {
-            const data = inputRef.current.getData();
-            console.log(data, 35435344635435)
+    
+    const { tokenn } = route.params;
+    const { phone } = route.params;
 
-            // Submit(navigation, data);
+    
 
-        }
 
-        if (inputRef.current.getData() == "") {
-            console.log(5464564564)
-            inputRef.current.showError("Vui lòng nhập mật khẩu")
-           
-        }
+    // const getDataa = () => {
+    //     if (inputRef.current.getData()) {
+    //         const data = inputRef.current.getData();
+    //         console.log(data, 35435344635435)
 
-    }
+    //         // Submit(navigation, data);
+
+    //     }
+
+    //     if (inputRef.current.getData() == "") {
+    //         console.log(5464564564)
+    //         inputRef.current.showError("Vui lòng nhập mật khẩu")
+
+    //     }
+
+    // }
 
     useEffect(() => {
         inputRef.current.showEye(true)
         inputRef.current.showPass(true)
     })
+
+    
+
 
 
     // const [password, setPassword] = useState('')
@@ -214,17 +223,17 @@ function Auth_register3({ navigation, route }) {
                         </View>
                         <View style={styles.register}>
                             <Text style={styles.TextInput}>Nhập mật khẩu để đăng nhập ở lần sau</Text>
-                            <TextInputLogin ref={inputRef} placeholder="Mật khẩu" Validate={ValidateCreatePassword} autoCompleteType="password" autoCapitalize="none" autoCorrect={false} returnKeyType="send"/>
+                            <TextInputLogin ref={inputRef} placeholder="Mật khẩu" Validate={ValidateCreatePassword} autoCompleteType="password" autoCapitalize="none" autoCorrect={false} returnKeyType="send" />
                             <Text style={styles.rules}>Mật khẩu phải có độ dài tối thiểu 6 kí tự, bao gồm cả chữ và số, không trùng với số điện thoại và dễ đoán.</Text>
-                            <Button textButton="HOÀN THÀNH" Submit={getDataa} />
+                            <Button textButton="HOÀN THÀNH" Submit={() => getDataaPasswordRegister(phone, tokenn, inputRef)} />
 
                         </View>
 
 
 
                         <View style={styles.footer}>
-                            <Text style={styles.textFooterLeft} onPress={() => { navigation.navigate('Auth_login1') }}>Đăng nhập</Text>
-                            <Text style={styles.textFooterRight} onPress={() => { navigation.navigate('Auth_forgotpassword1') }}>Quên mật khẩu</Text>
+                            <Text style={styles.textFooterLeft} onPress={() => { navigation.navigate('auth_login1') }}>Đăng nhập</Text>
+                            <Text style={styles.textFooterRight} onPress={() => { navigation.navigate('auth_forgotpassword1') }}>Quên mật khẩu</Text>
 
                         </View>
                     </View>

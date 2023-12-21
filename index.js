@@ -33,10 +33,11 @@ import auth_login2 from './src1/module/auth/screen/auth_login2';
 import auth_forgotpassword1 from './src1/module/auth/screen/auth_forgotpassword1';
 import auth_forgotpassword2 from './src1/module/auth/screen/auth_forgotpassword2';
 import Button from './src1/uicore/button.js';
-import Index from './src1/module/auth/screen';
+
 import auth_forgotpassword3 from './src1/module/auth/screen/auth_forgotpassword3';
 import auth_register1 from './src1/module/auth/screen/auth_register1';
 import auth_register2 from './src1/module/auth/screen/auth_register2';
 import auth_register3 from './src1/module/auth/screen/auth_register3';
+import  Index  from './src1/module/index.js';
 
 AppRegistry.registerComponent(appName, () => Index);
