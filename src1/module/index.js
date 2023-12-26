@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
-import LoadingScreen from "./Loading/screen/loadingcreen"
-import IndexInLoading from "./Loading";
+import LoadingScreen from "./loading/screen/loadingcreen"
+import IndexInLoading from "./loading";
 import IndexInApp from "./app";
 import IndexInAuth from "./auth";
 import messaging from '@react-native-firebase/messaging';
