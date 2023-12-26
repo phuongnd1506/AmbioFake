@@ -27,60 +27,7 @@ import { showToast } from '../../../uicore/toast.js';
 function Auth_login1({ navigation }) {
     const inputRef = useRef(null);
 
-    // const getDataa = () => {
-    //     if(inputRef.current.getData()){
-    //         const data = inputRef.current.getData();
-                  
-    //         SubmitLogin1(navigation, data);
-           
-    //     }
-           
-    //       if(inputRef.current.getData() == ""){
-    //         console.log(5464564564)
-    //          inputRef.current.showError("Vui lòng nhập số điện thoại")
-    //       }
-    
-    // }
-       
-      
-
-    // const handleButtonClick = () => {
-    //     Keyboard.dismiss();
-    // };
-
-    
-
-
-    // const showToast = () => {
-    //     Toast.show({
-    //         type: "error",
-    //         text1: "Thông báo",
-    //         text2: `${phoneeeee} không phải là số điện thoại`,
-    //         autoHide: true,
-    //         position: 'top',
-    //         visibilityTime: 2500,
-    //         topOffset: 0,
-
-    //     })
-    // }
-
-    // const showToast1 = () => {
-    //     Toast.show({
-    //         type: "error",
-    //         text1: "Thông báo",
-    //         text2: "Số điện thoại chưa đăng ký, vui lòng đăng ký tài khoản mới",
-    //         autoHide: true,
-    //         position: 'top',
-    //         visibilityTime: 2500,
-    //         topOffset: 0,
-
-    //     })
-    // }
-
-
-    // const phoneee = `Không tồn tại số điện thoại ${phone}`
-    // const phoneeee = phoneee.slice(29)
-    // const phoneeeee = `+84${phoneeee}`
+   
 
 
 
