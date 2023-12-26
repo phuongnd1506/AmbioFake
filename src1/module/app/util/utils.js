@@ -88,7 +88,7 @@ export const handleLogOutAll = async (historyLogins, navigation, setHistoryLogin
 
 
 
-export const getdataHistoryloginOnreFresh = async (setHistoryLogins, setIsRefresh) => {
+export const getDataHistoryloginOnreFresh = async (setHistoryLogins, setIsRefresh) => {
         setIsRefresh(true)
         const token = await getToken()
        

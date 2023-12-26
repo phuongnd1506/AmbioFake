@@ -9,7 +9,7 @@ import moment from 'moment';
 import { getUserInfo } from "../util/API.js";
 import { getHistoryLogin } from "../util/API.js";
 import { Logout } from "../util/API.js";
-import { handleLogOut, getDataHistorylogin, handleLogOutAll, onRefresh, getdataHistoryloginOnreFresh, getDataUserInfo } from "../util/util.js";
+import { handleLogOut, getDataHistorylogin, handleLogOutAll, onRefresh, getDataHistoryloginOnreFresh, getDataUserInfo } from "../util/util.js";
 import { numberPhone } from "../../Loading/util/util.js";
 import { numberPhoneLogin } from "../../auth/util/utils.js";
 
@@ -34,7 +34,7 @@ function App_manage({ navigation }) {
     
 
     const onRefreshh = (setHistoryLogins, setIsRefresh) => {
-        getdataHistoryloginOnreFresh(setHistoryLogins, setIsRefresh)
+        getDataHistoryloginOnreFresh(setHistoryLogins, setIsRefresh)
     }
 
 
