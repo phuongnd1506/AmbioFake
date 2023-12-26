@@ -11,18 +11,24 @@ import {
     useColorScheme,
     View,
   } from 'react-native';
+  import { TouchableWithoutFeedback, Keyboard } from 'react-native';
+  import PropTypes from 'prop-types';
 
-
-function Button({textButton, Submit}){
+function Button({textButton, onPresss}){
    return(
          <View style= {styles.container}>
             
-            <TouchableOpacity style={styles.button} onPress={Submit}>
+            <TouchableOpacity style={styles.button} onPress={() => {onPresss(),  Keyboard.dismiss()}}>
                          <Text style = {styles.textButton}>{textButton}</Text>
                      
             </TouchableOpacity>
          </View>
    )
+}
+
+Button.propTypes = {
+     textButton: PropTypes.string,
+     onPresss: PropTypes.func
 }
 
 

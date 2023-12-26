@@ -18,101 +18,17 @@ import { TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
-import Button from '../../../uicore/button.js';
-import Header from '../../../uicore/header.js';
-import TextInputLogin from '../../../uicore/input.js';
-import { ValidatePhone } from '../../../lib/validate.js';
-import { getDataaPhoneForgotPassword } from '../unti/unti.js';
+import {Button, Header} from '../../../uicore';
+import TextInputAuth from '../../../uicore/input.js';
+import { validatePhone } from '../../../lib/validate.js';
+import { handlePhoneForgotPassword } from '../util/utils.js';
 
 
 function Auth_forgotpassword1({ navigation }) {
 
     const inputRef = useRef(null);
 
-    // const getDataa = () => {
-    //     if(inputRef.current.getData()){
-    //         const data = inputRef.current.getData();
-            
-           
-
-    //         Submit(navigation, data);
-           
-    //     }
-           
-    //       if(inputRef.current.getData() == ""){
-    //         console.log(5464564564)
-    //          inputRef.current.showError("Vui lòng nhập số điện thoại")
-    //       }
     
-    // }
-       
-
-
-   
-
-
-    // const submit = () => {
-    //     console.log(phone)
-    //     const showToast = () => {
-    //         Toast.show({
-    //             type: "error",
-    //             text1: "Thông báo",
-    //             text2: `Không tồn tại số điện thoại ${phoneeeee}`,
-    //             autoHide: true,
-    //             position: 'top',
-    //             visibilityTime: 2500,
-    //             topOffset: 0,
-
-    //         })
-    //     }
-
-    //     const showToast1 = () => {
-    //         Toast.show({
-    //             type: "error",
-    //             text1: "Thông báo",
-    //             text2: `${phoneeeee} không phải là số điện thoại`,
-    //             autoHide: true,
-    //             position: 'top',
-    //             visibilityTime: 2500,
-    //             topOffset: 0,
-
-    //         })
-    //     }
-
-    //     const phoneee = `Không tồn tại số điện thoại ${phone}`
-    //     const phoneeee = phoneee.slice(29)
-    //     const phoneeeee = `+84${phoneeee}`
-
-
-    //     //http://192.168.86.20:3000/api/v1/users/forgotPassword
-    //     if (isValidPhone && phone) {
-    //         axios.post('https://ambio.vercel.app/api/v1/users/forgotPassword	', { "phoneNumber": phone })
-    //             .then(res => {
-    //                 navigation.navigate('Auth_forgotpassword2', { authh: phone, tokenn: res.data.token })
-    //                 console.log(res.data)
-
-    //             })
-    //             .catch(function (error) {
-    //                 console.log(error.response.data)
-    //                 if (error.response.data.errCode == 'AMBIO004') {
-    //                     showToast()
-    //                 }
-    //                 if (error.response.data.errCode == 'AMBIO002') {
-    //                     showToast1()
-    //                 }
-    //             });
-    //     }
-    //     verifyPhoneNumber3(phone);
-
-    //     if (!isValidPhone) {
-    //         return;
-    //     }
-    // };
-
-    // const submitAll = () => {
-    //     handleButtonClick()
-    //     submit()
-    // }
 
 
 
@@ -133,9 +49,9 @@ function Auth_forgotpassword1({ navigation }) {
                         </View>
                         <View style={styles.register}>
                             <Text style={styles.TextInput}>Nhập số điện thoại của bạn để tiếp tục</Text>
-                            <TextInputLogin ref={inputRef} placeholder="Số điện thoại" Validate = {ValidatePhone} keyboardType="numeric"/>
+                            <TextInputAuth ref={inputRef} placeholder="Số điện thoại" validate = {validatePhone} keyboardType="numeric"/>
 
-                            <Button textButton="QUÊN MẬT KHẨU" Submit={() => getDataaPhoneForgotPassword(navigation, inputRef)} />
+                            <Button textButton="QUÊN MẬT KHẨU" onPresss={() => handlePhoneForgotPassword(navigation, inputRef)} />
 
                         </View>
 

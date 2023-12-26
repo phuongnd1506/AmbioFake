@@ -6,36 +6,34 @@ import { Image, FlatList } from "react-native";
 import axios from "axios"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
-import { getToken } from "../unti/unti.js";
-import { getUserInfo } from "../unti/API.js";
-import { getHistoryLogin } from "../unti/API.js";
-import { Logout } from "../unti/API.js";
-import { Logoutt, getdataHistorylogin, LogouttAll, onRefresh, getdataHistoryloginOnreFresh, getdataUserInfo } from "../unti/unti.js";
+import { getUserInfo } from "../util/API.js";
+import { getHistoryLogin } from "../util/API.js";
+import { Logout } from "../util/API.js";
+import { handleLogOut, getDataHistorylogin, handleLogOutAll, onRefresh, getdataHistoryloginOnreFresh, getDataUserInfo } from "../util/util.js";
+import { numberPhone } from "../../Loading/util/util.js";
+import { numberPhoneLogin } from "../../auth/util/utils.js";
 
+  let token= "";
+  export const getToken = async() => { 
+    value = await AsyncStorage.getItem('accessToken'); 
+    return token = value;
+}
+ 
 
-
+  
 function App_manage({ navigation }) {
 
-    const [infoUser, setInfoUser] = useState()
     const [historyLogins, setHistoryLogins] = useState([])
     const [isRefresh, setIsRefresh] = useState(false)
-    var [token, setToken] = useState("")
 
-
-    const getTokenn = async () => {
-        const tokenn = await getToken()
-        setToken(tokenn)
-    }
+ 
     useEffect(() => {
-        getTokenn()
-    })
+        getDataHistorylogin(setHistoryLogins, setIsRefresh)
+    }, [])
 
-    useEffect(() => {
-        token && getdataUserInfo(token, setInfoUser), getdataHistorylogin(token, setHistoryLogins)
-    }, [token])
+    
 
     const onRefreshh = (setHistoryLogins, setIsRefresh) => {
-        onRefresh(setIsRefresh)
         getdataHistoryloginOnreFresh(setHistoryLogins, setIsRefresh)
     }
 
@@ -45,20 +43,16 @@ function App_manage({ navigation }) {
 
     useEffect(() => {
         const subscription = AppState.addEventListener('change', nextAppState => {
-            if (
-                appState.current.match(/inactive|background/) &&
-                nextAppState === 'active'
-            ) {
+          
                 onRefreshh(setHistoryLogins, setIsRefresh)
-            }
-            onRefreshh(setHistoryLogins, setIsRefresh)
-
+          
         });
 
         return () => {
             subscription.remove();
         };
     }, []);
+
 
 
 
@@ -353,7 +347,7 @@ function App_manage({ navigation }) {
                     </View>
                     <View style={styles.textInfo}>
                         <Text style={styles.textHeader}>Chào, deviceName1</Text>
-                        <Text style={styles.textHeader}>{infoUser}</Text>
+                        <Text style={styles.textHeader}>{numberPhone}{numberPhoneLogin}</Text>
                     </View>
                 </View>
 
@@ -377,7 +371,7 @@ function App_manage({ navigation }) {
                                 </View>
 
                                 <TouchableOpacity style={styles.itemRight}>
-                                    <Text style={styles.textItemRight} onPress={() => { Logoutt(token, item.item.clientID, item.item.isThisDevice, historyLogins, navigation, setHistoryLogins) }}>Đăng xuất</Text>
+                                    <Text style={styles.textItemRight} onPress={() => { handleLogOut(item.item.clientID, item.item.isThisDevice, historyLogins, navigation, setHistoryLogins, setIsRefresh) }}>Đăng xuất</Text>
                                 </TouchableOpacity>
 
                             </View>
@@ -387,7 +381,7 @@ function App_manage({ navigation }) {
                 </View>
                 <View style={styles.footer}>
                     <TouchableOpacity style={styles.buttonFooter}>
-                        <Text style={styles.textFooter} onPress={() => LogouttAll(token, historyLogins, navigation, setHistoryLogins)}>ĐĂNG XUẤT TẤT CẢ</Text>
+                        <Text style={styles.textFooter} onPress={() => handleLogOutAll(historyLogins, navigation, setHistoryLogins)}>ĐĂNG XUẤT TẤT CẢ</Text>
                     </TouchableOpacity>
                 </View>
 

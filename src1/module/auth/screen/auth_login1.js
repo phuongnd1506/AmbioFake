@@ -19,10 +19,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
 import Button from '../../../uicore/button.js';
-import TextInputLogin from '../../../uicore/input.js';
-import { SubmitLogin1 } from '../unti/API.js';
-import { ValidatePhone } from '../../../lib/validate.js';
-import { GetDataaPhoneLogin } from '../unti/unti.js';
+import TextInputAuth from '../../../uicore/input.js';
+import { validatePhone } from '../../../lib/validate.js';
+import { handlePhoneLogin } from '../util/utils.js';
 import { showToast } from '../../../uicore/toast.js';
 
 function Auth_login1({ navigation }) {
@@ -107,8 +106,8 @@ function Auth_login1({ navigation }) {
                         </View>
                         <View style={styles.login}>
                             <Text style={styles.TextInput}>Nhập số điện thoại của bạn để đăng nhập</Text>
-                            <TextInputLogin ref={inputRef} placeholder="Số điện thoại" Validate = {ValidatePhone} keyboardType="numeric"/>
-                            <Button textButton="TIẾP TỤC" Submit={() => GetDataaPhoneLogin(navigation, inputRef)} />
+                            <TextInputAuth ref={inputRef} placeholder="Số điện thoại" validate = {validatePhone} keyboardType="numeric"/>
+                            <Button textButton="TIẾP TỤC" onPresss={() => handlePhoneLogin(navigation, inputRef)} />
                         </View>
 
 

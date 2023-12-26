@@ -12,6 +12,7 @@ import {
   View,
 } from 'react-native';
 import SvgComponent from "../asset/SVG/SvgComponent";
+import PropTypes from 'prop-types';
 
 
 function Header({textHeader, onBackPress }) {
@@ -30,6 +31,12 @@ function Header({textHeader, onBackPress }) {
     </View>
   )
 }
+
+Header.propTypes = { 
+    textHeader: PropTypes.string,
+    onBackPress: PropTypes.func
+}
+
 
 
 const styles = StyleSheet.create({

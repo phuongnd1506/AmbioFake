@@ -18,157 +18,26 @@ import { TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
-import Button from '../../../uicore/button.js';
-import Header from '../../../uicore/header.js';
-import TextInputLogin from '../../../uicore/input.js';
+import {Button, Header} from '../../../uicore';
+import TextInputAuth from '../../../uicore/input.js';
 import DeviceInfo from 'react-native-device-info';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ValidateCreatePassword } from '../../../lib/validate.js';
-import { getDataaPasswordForgotPassword } from '../unti/unti.js';
+import { validateCreatePassword } from '../../../lib/validate.js';
+import { handlePasswordForgotPassword } from '../util/utils.js';
 
 
 
 function Auth_forgotpassword3({ navigation, route }) {
-
     const inputRef = useRef(null);
-    
-  
+
     const { tokenn } = route.params;
     const { phone } = route.params;
-
+    useEffect(() => {
+        inputRef.current.showEye(true)
+        inputRef.current.showPass(true)
+    })
     
 
-    // useEffect(() => {getDeviceInfo()}, [])
-    // const getDataa = () => {
-    //     if (inputRef.current.getData()) {
-    //         const data = inputRef.current.getData();
-    //         console.log(data, 35435344635435)
-
-    //         // Submit(navigation, data);
-
-    //     }
-
-    //     if (inputRef.current.getData() == "") {
-    //         console.log(5464564564)
-    //         inputRef.current.showError("Vui lòng nhập mật khẩu")
-           
-    //     }
-
-    // }
-
-
-    // const [newPassword, setNewPassword] = useState('')
-    // const [isValidPhone, setValidPhone] = useState(true)
-    // const [errorMessage, setErrorMessage] = useState('')
-
-    // const verifyPhoneNumber3 = (e) => {
-    //     setNewPassword(e);
-    //     if (!e) {
-    //         setErrorMessage('Vui lòng nhập mật khẩu');
-    //         setValidPhone(false);
-    //         return;
-    //     }
-    //     let formData = {
-    //         NewPasswordd: e
-    //     }
-
-    //     let regex = new RegExp(/^(?=.*[a-zA-Z0-9]).{6,15}$/)
-    //     let regexx = new RegExp(/^(?=.*[0-9]).{6,}$/)
-    //     let regexxx = new RegExp(/^(?=.*[a-zA-Z]).{6,}$/)
-    //     if (!regex.test(formData.NewPasswordd)) {
-    //         setErrorMessage('Mật khẩu tối thiểu 6 kí tự và tối đa 15 kí tự');
-    //         setValidPhone(false);
-    //     }
-    //     else {
-    //         if (!regexx.test(formData.NewPasswordd)) {
-    //             setErrorMessage('Mật khẩu phải có kí tự số');
-    //             setValidPhone(false)
-    //         }
-    //         else {
-    //             if (!regexxx.test(formData.NewPasswordd)) {
-    //                 setErrorMessage('Mật khẩu phải có kí tự chữ');
-    //                 setValidPhone(false)
-    //             }
-    //             else {
-    //                 setValidPhone(true)
-    //                 setErrorMessage('')
-
-    //             }
-    //         }
-    //     }
-    // }
-
-
-
-    // const [deviceId, setdeviceId] = useState('')
-    // const [deviceName, setdeviceName] = useState('')
-    // const [deviceSystem, setdeviceSystem] = useState('')
-
-    // const handleButtonClick = () => {
-    //     Keyboard.dismiss();
-    // };
-
-
-    // const getdeviceId = async () => {
-    //     var uniqueId = await DeviceInfo.getUniqueId();
-    //     var deviceNamee = await DeviceInfo.getDeviceName();
-    //     var deviceSystemm = await DeviceInfo.getSystemName();
-    //     setdeviceId(uniqueId)
-    //     setdeviceName(deviceNamee)
-    //     setdeviceSystem(deviceSystemm)
-    // }
-
-    // useEffect(() => { getdeviceId() }, [])
-
-    // const { authh } = route.params
-    // const { tokenn } = route.params
-
-    // const submit = () => {
-
-    //     console.log(authh)
-    //     console.log(tokenn)
-
-    //     //http://192.168.86.20:3000/api/v1/users/newPassword
-    //     if (isValidPhone && newPassword) {
-    //         axios.post('https://ambio.vercel.app/api/v1/users/newPassword', {
-    //             "phoneNumber": authh,
-    //             "newPassWord": newPassword,
-    //             "clientID": deviceId,
-    //             "deviceName": deviceName,
-    //             "operatingSystem": deviceSystem,
-    //             "token": tokenn
-    //         })
-    //             .then(async res => {
-    //                 await storeData(res.data.accessToken)
-    //                 navigation.navigate('App_manage')
-    //             })
-    //             .catch(error => console.log(error.response.data))
-    //     }
-    //     verifyPhoneNumber3(newPassword);
-
-    //     if (!isValidPhone) {
-    //         return;
-    //     }
-
-
-    // };
-
-
-
-    // const storeData = async (value) => {
-    //     try {
-    //         await AsyncStorage.setItem('accessToken', value);
-    //     } catch (e) {
-    //         //error
-    //     }
-    // };
-
-
-
-    // const submitAll = () => {
-    //     handleButtonClick();
-    //     submit();
-    // }
 
     return (
         <>
@@ -186,9 +55,9 @@ function Auth_forgotpassword3({ navigation, route }) {
                         </View>
                         <View style={styles.register}>
                             <Text style={styles.TextInput}>Tạo mật khẩu mới để tiếp tục (mật khẩu nên chứa các kí tự chữ, số và có tối thiểu 6 kí tự)</Text>
-                            <TextInputLogin ref={inputRef} placeholder="Mật khẩu" Validate={ValidateCreatePassword} autoCompleteType="password" autoCapitalize="none" autoCorrect={false} returnKeyType="send"/>
+                            <TextInputAuth ref={inputRef} placeholder="Mật khẩu" validate={validateCreatePassword} autoCompleteType="password" autoCapitalize="none" autoCorrect={false} returnKeyType="send"/>
 
-                            <Button textButton="TIẾP TỤC" Submit={() => getDataaPasswordForgotPassword(phone, tokenn, inputRef)} />
+                            <Button textButton="TIẾP TỤC" onPresss={() => handlePasswordForgotPassword(phone, tokenn, inputRef)} />
 
                         </View>
 

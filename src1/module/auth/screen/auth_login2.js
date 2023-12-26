@@ -18,39 +18,24 @@ import { TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
-import Button from '../../../uicore/button.js';
-import Header from '../../../component1/Header.js';
-import TextInputLogin from '../../../uicore/input.js';
+import {Button, Header} from '../../../uicore';
+import TextInputAuth from '../../../uicore/input.js';
 import DeviceInfo from 'react-native-device-info';
-import { Submit } from '../unti/API.js';
-import { ValidatePassword } from '../../../lib/validate.js';
-import { SubmitLogin2 } from '../unti/API.js';
-import { getDataaPasswordLogin } from '../unti/unti.js';
+import { validatePassword } from '../../../lib/validate.js';
+import { handlePasswordLogin } from '../util/utils.js';
 
 
 
 
 
 function Auth_login2({ navigation, route }) {
-    const [deviceId, setdeviceId] = useState('')
-    const [deviceName, setdeviceName] = useState('')
-    const [deviceSystem, setdeviceSystem] = useState('')
-
-    const getdeviceId = async () => {
-        var uniqueId = await DeviceInfo.getUniqueId();
-        var deviceNamee = await DeviceInfo.getDeviceName();
-        var deviceSystemm = await DeviceInfo.getSystemName();
-        setdeviceId(uniqueId)
-        setdeviceName(deviceNamee)
-        setdeviceSystem(deviceSystemm)
-
-    }
-
-    useEffect(() => {getdeviceId()}, [])
 
     const {auth} = route.params
     const inputRef = useRef(null);
-  
+    useEffect(() => {
+        inputRef.current.showEye(true)
+        inputRef.current.showPass(true)
+    })
     // const getDataa = () => {
     //     if (inputRef.current.getData()) {
     //         const data = inputRef.current.getData();
@@ -66,7 +51,7 @@ function Auth_login2({ navigation, route }) {
     //     }      
 
     // 
-  
+   
     // const handleButtonClick = () => {
     //     Keyboard.dismiss();
     // };
@@ -171,9 +156,9 @@ function Auth_login2({ navigation, route }) {
                         </View>
                         <View style={styles.register}>
                             <Text style={styles.TextInput}>Nhập mật khẩu của bạn để đăng nhập</Text>
-                            <TextInputLogin ref={inputRef} placeholder="Mật khẩu" Validate={ValidatePassword} autoCompleteType="password" autoCapitalize="none" autoCorrect={false} returnKeyType="send"/>
+                            <TextInputAuth ref={inputRef} placeholder="Mật khẩu" validate={validatePassword} autoCompleteType="password" autoCapitalize="none" autoCorrect={false} returnKeyType="send"/>
 
-                            <Button textButton="ĐĂNG NHẬP" Submit={() => getDataaPasswordLogin(inputRef, navigation, auth,  deviceId, deviceName, deviceSystem)} />
+                            <Button textButton="ĐĂNG NHẬP" onPresss={() => handlePasswordLogin(inputRef, navigation, auth)} />
 
                         </View>
 

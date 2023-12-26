@@ -18,11 +18,10 @@ import { TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
-import Button from '../../../uicore/button.js';
-import Header from '../../../uicore/header.js';
-import TextInputLogin from '../../../uicore/input.js';
-import { ValidatePhone } from '../../../lib/validate.js';
-import { getDataaPhoneRegister } from '../unti/unti.js';
+import {Button, Header} from '../../../uicore';
+import TextInputAuth from '../../../uicore/input.js';
+import { validatePhone } from '../../../lib/validate.js';
+import { handlePhoneRegister } from '../util/utils.js';
 
 
 function Auth_register1({ navigation }) {
@@ -184,9 +183,9 @@ function Auth_register1({ navigation }) {
                         </View>
                         <View style={styles.register}>
                             <Text style={styles.TextInput}>Nhập số điện thoại của bạn sau đó tiếp tục</Text>
-                            <TextInputLogin ref={inputRef} placeholder="Số điện thoại" Validate = {ValidatePhone} keyboardType="numeric"/>
+                            <TextInputAuth ref={inputRef} placeholder="Số điện thoại" validate = {validatePhone} keyboardType="numeric"/>
                             <Text style={styles.rules}>Bạn bấm tiếp tục là đồng nghĩa với việc chấp nhận <Text style={{ textDecorationLine: 'underline', color: '#228B22' }} onPress={() => { navigation.navigate('auth_term') }}>điều khoản của chúng tôi</Text></Text>
-                            <Button textButton="ĐĂNG KÝ" Submit={() => getDataaPhoneRegister(navigation, inputRef)} />
+                            <Button textButton="ĐĂNG KÝ" onPresss={() => handlePhoneRegister(navigation, inputRef)} />
 
                         </View>
 

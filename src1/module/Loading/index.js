@@ -1,7 +1,12 @@
+
+
+
+
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import App_manage from './app_manage';
+import LoadingScreen from './screen/loadingcreen';
 
 
 
@@ -12,16 +17,16 @@ const Stack = createNativeStackNavigator();
 
 
 
-function IndexInApp({init}) {
+function IndexInLoading({init}) {
   
 
   return (
 
     <NavigationContainer>
         
-      <Stack.Navigator initialRouteName="app_manage" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName="loadingScreen" screenOptions={{ headerShown: false }}>
         
-        <Stack.Screen name="app_manage" component={App_manage}/>
+        <Stack.Screen name="loadingScreen" component={LoadingScreen}/>
         
       </Stack.Navigator>
 
@@ -32,4 +37,4 @@ function IndexInApp({init}) {
 
 
 
-export default IndexInApp;
+export default IndexInLoading;

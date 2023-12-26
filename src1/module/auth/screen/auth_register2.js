@@ -18,11 +18,10 @@ import { TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
-import Button from '../../../uicore/button.js';
-import Header from '../../../uicore/header.js';
-import TextInputLogin from '../../../uicore/input.js';
-import { ValidateCode } from '../../../lib/validate.js';
-import { getDataaCodeRegister } from '../unti/unti.js';
+import {Button, Header} from '../../../uicore';
+import TextInputAuth from '../../../uicore/input.js';
+import { validateCode } from '../../../lib/validate.js';
+import { handleCodeRegister } from '../util/utils.js';
 
 
 
@@ -32,98 +31,7 @@ function Auth_register2({ navigation, route }) {
     const {phone} = route.params
     const {tokenn} = route.params
     console.log(phone,"phone registerrrrrrrrrrrrrrrr")
-    //  const getDataa = () => {
-    //      if(inputRef.current.getData()){
-    //          const data = inputRef.current.getData();
-            
-           
-
-    //          Submit(navigation, data);
-           
-    //      }
-           
-    //        if(inputRef.current.getData() == ""){
-    //          console.log(5464564564)
-    //           inputRef.current.showError("Vui lòng nhập mã xác nhận")
-    //        }
     
-    //  }
-     
-
-    // const [code, setCode] = useState('')
-    // const [isValidPhone, setValidPhone] = useState(true)
-    // const [errorMessage, setErrorMessage] = useState('')
-
-    // const verifyPhoneNumber3 = (e) => {
-    //     setCode(e);
-    //     if (!e) {
-    //         setErrorMessage('Vui lòng nhập mã xác nhận');
-    //         setValidPhone(false);
-    //         return;
-    //     }
-
-    //     let formData = {
-    //         pphone: e
-    //     }
-
-    //     if (code) {
-    //         setErrorMessage('');
-    //         setValidPhone(true)
-
-    //     }
-    // }
-
-    const handleButtonClick = () => {
-        Keyboard.dismiss();
-    };
-
-
-    // const { tokenn } = route.params
-    // const { auth } = route.params
-
-    // const submit = () => {
-
-    //     console.log(code)
-    //     const showToast = () => {
-    //         Toast.show({
-    //             type: "error",
-    //             text1: "Thông báo",
-    //             text2: "Code không hợp lệ hoặc đã hết hạn",
-    //             autoHide: true,
-    //             position: 'top',
-    //             visibilityTime: 2500,
-    //             topOffset: 0,
-
-    //         })
-    //     }
-
-    //     //http://192.168.86.20:3000/api/v1/users/verifyCode
-    //     if(isValidPhone && code){
-    //     axios.post('https://ambio.vercel.app/api/v1/users/verifyCode', { "phoneNumber": auth, "code": Number.parseInt(code), "token": tokenn })
-    //         .then(res => {
-
-    //             navigation.navigate('Auth_register3', { tokenn, auth })
-
-    //         })
-
-    //         .catch(function (error) {
-    //             console.log(error.response.data)
-    //             if (error.response.data.errCode == 'AMBIO002') {
-    //                 showToast()
-    //             }
-    //         });
-    //     }
-    //     verifyPhoneNumber3(code);
-
-    //     if (!isValidPhone) {
-    //         return;
-    //     }
-    // };
-
-    // const submitAll = () => {
-    //     handleButtonClick()
-    //     submit()
-    // }
 
     return (
         <>
@@ -142,9 +50,9 @@ function Auth_register2({ navigation, route }) {
                     </View>
                     <View style={styles.register}>
                         <Text style={styles.TextInput}>Một mã xác nhận dùng để đăng ký đã được gửi đến số điện thoại: {phone}</Text>
-                        <TextInputLogin ref={inputRef} placeholder="Nhập mã xác nhận" Validate = {ValidateCode} keyboardType="numeric"/>
+                        <TextInputAuth ref={inputRef} placeholder="Nhập mã xác nhận" validate = {validateCode} keyboardType="numeric"/>
 
-                        <Button textButton="TIẾP TỤC" Submit={() => getDataaCodeRegister(tokenn, phone, inputRef, navigation)} />
+                        <Button textButton="TIẾP TỤC" onPresss={() => handleCodeRegister(tokenn, phone, inputRef, navigation)} />
 
                     </View>
 

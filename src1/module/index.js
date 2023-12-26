@@ -1,23 +1,22 @@
 import { useState, useEffect } from "react"
 import LoadingScreen from "./Loading/screen/loadingcreen"
-import Auth_login1 from "./auth/screen/auth_login1"
-import IndexInApp from "./app/screen"
-import IndexInAuth from "./auth/screen"
-
+import IndexInLoading from "./Loading";
+import IndexInApp from "./app";
+import IndexInAuth from "./auth";
 import messaging from '@react-native-firebase/messaging';
-import { AppRegistry } from 'react-native';
 import { PermissionsAndroid } from 'react-native';
+
 
 
 PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
 messaging().setBackgroundMessageHandler(async remoteMessage => {
     console.log('Message handled in the background!', remoteMessage);
 });
-AppRegistry.registerComponent('Index', () => Index);
 
 
 
-export let screennavigation = () => { }
+
+export let setAppState = () => { }
 
 
 function Index() {
@@ -45,14 +44,14 @@ function Index() {
 
     const [state, setState] = useState({ isLoading: true, isLogin: false })
 
-    screennavigation = setState
+    setAppState = setState
 
     console.log(state.isLoading, 1231231312321)
 
     return (
 
 
-        state.isLoading ? <LoadingScreen /> : (state.isLogin ? <IndexInApp />  : <IndexInAuth />)
+        state.isLoading ? <IndexInLoading/> : (state.isLogin ? <IndexInApp />  : <IndexInAuth />)
 
     )
 

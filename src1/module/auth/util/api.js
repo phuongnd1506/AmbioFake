@@ -4,7 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect, useState } from 'react';
 
 
-export const SubmitLogin1 = async (phone) => {
+export const submitLogin1 = async (phone) => {
         
     console.log(phone,99999999999)
    
@@ -12,10 +12,11 @@ export const SubmitLogin1 = async (phone) => {
         const response = await axios.post('https://ambio.vercel.app/api/v1/users/verifyPhoneNumber', {
             "phoneNumber": phone
         }); 
+        
         return response; 
         
       } catch (error) {
-        return error.response.data.errCode
+        return error.response.data
       }
 
 
@@ -28,7 +29,7 @@ export const SubmitLogin1 = async (phone) => {
 
 
 
-export const SubmitLogin2 = async (navigation, data, auth, deviceId, deviceName, deviceSystem) => {
+export const submitLogin2 = async (navigation, data, auth, deviceId, deviceName, deviceSystem) => {
     console.log(data, 123123333)
     console.log(auth, 15151515)
     
@@ -44,7 +45,8 @@ export const SubmitLogin2 = async (navigation, data, auth, deviceId, deviceName,
         return response.data.accessToken; 
        
       } catch (error) {
-        return error.response.data.errCode;
+        console.log(error.response.data)
+        return error.response.data;
         
       }
 }
@@ -54,15 +56,18 @@ export const SubmitLogin2 = async (navigation, data, auth, deviceId, deviceName,
 
 
 
-export const  SubmitRegister1 = async (phone) => {
+
+export const  submitRegister1 = async (phone) => {
     try {
         const response = await axios.post('https://ambio.vercel.app/api/v1/users/register', {
             "phoneNumber": phone
         }); 
+       
         return response; 
         
       } catch (error) {
-        return error.response.data.errCode
+     
+        return error.response.data
         
       }
 }
@@ -72,7 +77,7 @@ export const  SubmitRegister1 = async (phone) => {
 
 
 
-export const SubmitRegister2 = async (tokenn, phone, code) => {
+export const submitRegister2 = async (tokenn, phone, code) => {
 
     try {
         const response = await  axios.post('https://ambio.vercel.app/api/v1/users/verifyCode', 
@@ -80,8 +85,8 @@ export const SubmitRegister2 = async (tokenn, phone, code) => {
         return response; 
        
       } catch (error) {
-        console.log(error.response.data.errCode)
-        return error.response.data.errCode
+  
+        return error.response.data
         
       }
 }
@@ -89,7 +94,7 @@ export const SubmitRegister2 = async (tokenn, phone, code) => {
 
 
 
-export const SubmitRegister3 = async (phone, data, tokenn, tokenCFM, deviceId, deviceName, deviceSystem) => {
+export const submitRegister3 = async (phone, data, tokenn, tokenCFM, deviceId, deviceName, deviceSystem) => {
     try {
         const response = await  axios.post('https://ambio.vercel.app/api/v1/users/signUp', {
             "phoneNumber": phone,
@@ -112,20 +117,21 @@ export const SubmitRegister3 = async (phone, data, tokenn, tokenCFM, deviceId, d
 
 
 
-export const  SubmitForgotPassword1 = async (phone) => {
+export const  submitForgotPassword1 = async (phone) => {
     try {
         const response = await axios.post('https://ambio.vercel.app/api/v1/users/forgotPassword	', { "phoneNumber": phone })
         return response; 
    
       } catch (error) {
-         return error.response.data.errCode;
+  
+         return error.response.data;
         
       }
 }
 
 
 
-export const SubmitForgotPassword2 = async (tokenn, phone, code) => {
+export const submitForgotPassword2 = async (tokenn, phone, code) => {
 
     try {
         const response = await  axios.post('https://ambio.vercel.app/api/v1/users/verifyCode', 
@@ -133,7 +139,7 @@ export const SubmitForgotPassword2 = async (tokenn, phone, code) => {
         return response; 
        
       } catch (error) {
-        return error.response.data.errCode;
+        return error.response.data;
         
       }
 }
@@ -141,7 +147,7 @@ export const SubmitForgotPassword2 = async (tokenn, phone, code) => {
 
 
 
-export const SubmitForgotPassword3 = async (phone, data, tokenn, deviceId, deviceName, deviceSystem) => {
+export const submitForgotPassword3 = async (phone, data, tokenn, deviceId, deviceName, deviceSystem) => {
     try {
         const response = await  axios.post('https://ambio.vercel.app/api/v1/users/newPassword', {
             "phoneNumber": phone,

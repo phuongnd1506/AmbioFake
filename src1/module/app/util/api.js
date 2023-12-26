@@ -37,7 +37,8 @@ export const getHistoryLogin = async (token) => {
         
 
     } catch (error) {
-
+      
+        return error.response.data.message;
     }
 
 }
@@ -47,7 +48,7 @@ export const getHistoryLogin = async (token) => {
 
     
 
-export const Logout = async (client, token, index, isThisDevice, historyLogins, navigation) => {
+export const logOut = async (client, token, index, isThisDevice, historyLogins, navigation) => {
 
 
     try {

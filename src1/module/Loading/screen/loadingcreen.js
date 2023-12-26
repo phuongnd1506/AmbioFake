@@ -14,18 +14,14 @@ import {
 } from 'react-native';
 
 import { useEffect } from 'react';
-import { indexx } from './index.js';
-import { screennavigation } from '../../index.js';
+import { handleScreen } from '../util/utils.js';
+
 
 function LoadingScreen() {
   
 
-
-
-
-
    useEffect(() => {
-       indexx()
+    handleScreen()
    }, [])
 
 

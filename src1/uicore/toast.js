@@ -1,11 +1,11 @@
 import Toast from "react-native-toast-message"
 
 
-export const showToast = (phone, messeage) => {
+export const showToast = (messeage) => {
     Toast.show({
         type: "error",
         text1: "Thông báo",
-        text2: `${phone} ${messeage}`,
+        text2: messeage,
         autoHide: true,
         position: 'top',
         visibilityTime: 2500,

@@ -19,7 +19,7 @@ import { forwardRef, useImperativeHandle } from 'react';
 
 
 
-const TextInputLogin = ({ placeholder, autoCompleteType, autoCapitalize, autoCorrect, returnKeyType,  keyboardType, Validate  }, ref) => {
+const TextInputAuth = ({ placeholder, autoCompleteType, autoCapitalize, autoCorrect, returnKeyType, keyboardType, validate }, ref) => {
     const [isVali, setIsVali] = useState(true)
     const [errorMessage, setErrorMessage] = useState("")
     const [phone, setPhone] = useState("")
@@ -36,7 +36,14 @@ const TextInputLogin = ({ placeholder, autoCompleteType, autoCapitalize, autoCor
 
     useImperativeHandle(ref, () => ({
         getData: () => {
-            return phone;
+            const rs = validate(phone)
+            if (rs != "") {
+                setErrorMessage(rs)
+                setIsVali(false)
+              
+            }else {
+                return phone
+            }  
         },
         showError: (value) => {
             setErrorMessage(value)
@@ -48,7 +55,7 @@ const TextInputLogin = ({ placeholder, autoCompleteType, autoCapitalize, autoCor
         showPass: (value) => {
             setHidePassword(true)
         }
-      
+
     }));
 
 
@@ -65,36 +72,36 @@ const TextInputLogin = ({ placeholder, autoCompleteType, autoCapitalize, autoCor
                         ? { ...styles.input }
                         : { ...styles.input, ...styles.invalid }
                 }
-                keyboardType= {keyboardType}
+                keyboardType={keyboardType}
 
                 onChangeText={(value) => {
-                   setPhone(value)
-                    var rs = Validate(value)
-                     if(rs) {
+                    setPhone(value)
+                    var rs = validate(value)
+                    if (rs) {
                         setErrorMessage(rs)
                         setIsVali(false)
-                     }else{
+                    } else {
                         setErrorMessage("")
                         setIsVali(true)
-                     }
-                     
+                    }
+
 
                 }}
                 value={phone}
 
 
             />
- 
-            {isEye ?
-            <TouchableOpacity
-                activeOpacity={0.8}
-                style={styles.visibilityBtn}
-                onPress={managePasswordVisibility}
-            >
-                <Image source={hidePassword ? require('../asset/eye.png') : require('../asset/hidden.png')} style={styles.btnImage} />
 
-            </TouchableOpacity> : null}
-            <Text style={{ fontSize: 16, color: 'red', marginTop: 4 }}>{isVali ? '' : errorMessage}</Text> 
+            {isEye ?
+                <TouchableOpacity
+                    activeOpacity={0.8}
+                    style={styles.visibilityBtn}
+                    onPress={managePasswordVisibility}
+                >
+                    <Image source={hidePassword ? require('../asset/eye.png') : require('../asset/hidden.png')} style={styles.btnImage} />
+
+                </TouchableOpacity> : null}
+            <Text style={{ fontSize: 16, color: 'red', marginTop: 4 }}>{isVali ? '' : errorMessage}</Text>
 
         </View>
 
@@ -103,7 +110,7 @@ const TextInputLogin = ({ placeholder, autoCompleteType, autoCapitalize, autoCor
 
 };
 
-export default forwardRef(TextInputLogin)
+export default forwardRef(TextInputAuth)
 
 
 
