@@ -17,27 +17,29 @@ import LoginManagement from './component/Manage/LoginManagement';
 import CreatePasswordPasswordRetrieval from './component/auth/CreatePasswordPasswordRetrieval';
 import Main from './src/Main';
 import demo from './src/demo'
-import Auth_login1 from './src1/screen1/auth/Auth_login1';
 
-import Auth_login2 from './src1/screen1/auth/Auth_login2';
-import Auth_register2 from './src1/screen1/auth/Auth_register2';
-import Auth_forgotpassword2 from './src1/screen1/auth/Auth_forgotpassword2';
-import Auth_register3 from './src1/screen1/auth/Auth_register3';
-import Auth_forgotpassword3 from './src1/screen1/auth/Auth_forgotpassword3';
-import Auth_term from './src1/screen1/auth/Auth_term';
-import Maine from './src1/screen1/Maine';
 
-import LoadingScreen from './src1/screen1/loading/LoadingScreen';
+
 import auth_login1 from './src1/module/auth/screen/auth_login1';
 import auth_login2 from './src1/module/auth/screen/auth_login2';
 import auth_forgotpassword1 from './src1/module/auth/screen/auth_forgotpassword1';
 import auth_forgotpassword2 from './src1/module/auth/screen/auth_forgotpassword2';
-import Button from './src1/uicore/button.js';
+
 
 import auth_forgotpassword3 from './src1/module/auth/screen/auth_forgotpassword3';
 import auth_register1 from './src1/module/auth/screen/auth_register1';
 import auth_register2 from './src1/module/auth/screen/auth_register2';
 import auth_register3 from './src1/module/auth/screen/auth_register3';
 import  Index  from './src1/module/index.js';
+import messaging from '@react-native-firebase/messaging';
+import { PermissionsAndroid } from 'react-native';
+
+
+
+PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
+messaging().setBackgroundMessageHandler(async remoteMessage => {
+    console.log('Message handled in the background!', remoteMessage);
+});
+
 
 AppRegistry.registerComponent(appName, () => Index);

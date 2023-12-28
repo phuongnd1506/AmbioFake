@@ -9,9 +9,9 @@ import moment from 'moment';
 import { getUserInfo } from "../util/API.js";
 import { getHistoryLogin } from "../util/API.js";
 import { Logout } from "../util/API.js";
-import { handleLogOut, getDataHistorylogin, handleLogOutAll, onRefresh, getDataHistoryloginOnreFresh, getDataUserInfo } from "../util/util.js";
-import { numberPhone } from "../../Loading/util/util.js";
-import { numberPhoneLogin } from "../../auth/util/utils.js";
+import { handleLogOut, getDataHistorylogin, handleLogOutAll, onRefresh, getDataHistoryloginOnreFresh, getDataUserInfo } from "../util/utils.js";
+import { numberPhone } from "../../loading/util/utils.js";
+
 
   let token= "";
   export const getToken = async() => { 
@@ -26,7 +26,8 @@ function App_manage({ navigation }) {
     const [historyLogins, setHistoryLogins] = useState([])
     const [isRefresh, setIsRefresh] = useState(false)
 
- 
+
+
     useEffect(() => {
         getDataHistorylogin(setHistoryLogins, setIsRefresh)
     }, [])
@@ -68,7 +69,7 @@ function App_manage({ navigation }) {
                     </View>
                     <View style={styles.textInfo}>
                         <Text style={styles.textHeader}>Chào, deviceName1</Text>
-                        <Text style={styles.textHeader}>{numberPhone}{numberPhoneLogin}</Text>
+                        <Text style={styles.textHeader}>{numberPhone}</Text>
                     </View>
                 </View>
 

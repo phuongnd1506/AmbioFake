@@ -1,7 +1,7 @@
 import axios from "axios"
 import App_manage from "../screen/app_manage"
 import { screennavigation } from "../.."
-
+import { sendAPIRequestGet, sendAPIRequestDelete } from "../../../lib/sendapirequest"
 
 
 
@@ -21,26 +21,8 @@ export const getUserInfo = async (token) => {
 
 
 
-export const getHistoryLogin = async (token) => {
-    let config = {
-        headers: {
-            'Authorization': 'Bearer ' + token
-        }
-    }
-
-
-    console.log(config, "token historylogin")
-    try {
-        const response = await axios.get('https://ambio.vercel.app/api/v1/users/historyLogin', config
-        )
-        return response.data.historyLogins;
-        
-
-    } catch (error) {
-      
-        return error.response.data.message;
-    }
-
+export const getHistoryLogin = async () => {
+     return res = await sendAPIRequestGet('https://ambio.vercel.app/api/v1/users/historyLogin')
 }
 
 
@@ -49,17 +31,5 @@ export const getHistoryLogin = async (token) => {
     
 
 export const logOut = async (client, token, index, isThisDevice, historyLogins, navigation) => {
-
-
-    try {
-        const response = await  axios.delete('https://ambio.vercel.app/api/v1/users/logout', {
-            data: client, headers: {
-                'Authorization': 'Bearer ' + token
-            }
-        })
-        return response; 
-      } catch (error) {
-        console.error(error, "Error in Delete");
-      
-      }
+       return res = await sendAPIRequestDelete('https://ambio.vercel.app/api/v1/users/logout', client)
 }

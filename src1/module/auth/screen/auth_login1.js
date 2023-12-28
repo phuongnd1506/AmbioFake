@@ -13,7 +13,7 @@ import {
     View,
     Fragment
 } from 'react-native';
-import { KeyboardAvoidingView } from 'react-native';
+import {ActivityIndicator} from 'react-native';
 import { TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import axios from 'axios';
@@ -24,11 +24,11 @@ import { validatePhone } from '../../../lib/validate.js';
 import { handlePhoneLogin } from '../util/utils.js';
 import { showToast } from '../../../uicore/toast.js';
 
+
+
 function Auth_login1({ navigation }) {
     const inputRef = useRef(null);
-
-   
-
+    
 
 
     return (

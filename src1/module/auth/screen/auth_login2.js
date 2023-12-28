@@ -14,7 +14,7 @@ import {
     Fragment
 } from 'react-native';
 import { KeyboardAvoidingView } from 'react-native';
-import { TouchableWithoutFeedback, Keyboard } from 'react-native';
+import {ActivityIndicator} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
@@ -23,10 +23,7 @@ import TextInputAuth from '../../../uicore/input.js';
 import DeviceInfo from 'react-native-device-info';
 import { validatePassword } from '../../../lib/validate.js';
 import { handlePasswordLogin } from '../util/utils.js';
-
-
-
-
+import { loading } from '../util/utils.js';
 
 function Auth_login2({ navigation, route }) {
 
@@ -56,7 +53,7 @@ function Auth_login2({ navigation, route }) {
                             <Text style={styles.TextInput}>Nhập mật khẩu của bạn để đăng nhập</Text>
                             <TextInputAuth ref={inputRef} placeholder="Mật khẩu" validate={validatePassword} autoCompleteType="password" autoCapitalize="none" autoCorrect={false} returnKeyType="send"/>
 
-                            <Button textButton="ĐĂNG NHẬP" onPresss={() => handlePasswordLogin(inputRef, navigation, auth)} />
+                           <Button textButton="ĐĂNG NHẬP" onPresss={() => handlePasswordLogin(inputRef, navigation, auth)} /> 
 
                         </View>
 

@@ -6,21 +6,13 @@ import { getToken } from "../screen/app_manage";
 
 
 
-export const getDataUserInfo = async (setInfoUser) => {
-      const token = await getToken()
-      const res = await getUserInfo(token)
-      if(res) {
-        setInfoUser(res)
-      }
-}  
-
-
 
 
 export const getDataHistorylogin = async (setHistoryLogins, setIsRefresh) => {
-        const token = await getToken()
-        const res = await getHistoryLogin(token)
         setIsRefresh(true)
+       
+        const res = await getHistoryLogin()
+       
         if (res) {
                
                 setHistoryLogins(res)
@@ -31,33 +23,20 @@ export const getDataHistorylogin = async (setHistoryLogins, setIsRefresh) => {
 
 
 export const handleLogOut = async (index, isThisDevice, historyLogins, navigation, setHistoryLogins, setIsRefresh) => {
-        const token = await getToken()
         const client = historyLogins.map((e) => {
                 return {
-                        clientID: e.clientID
+                        clientID: e.clientID,
+                        isLogout: index === e.clientID
                 }
         })
 
-        client.forEach((item, i) => {
-
-                if (index == item.clientID) {
-
-                        item.isLogout = true;
-
-                } else {
-                        item.isLogout = false
-                }
-        })
-
-
-
-        const res = await logOut(client, token, index, isThisDevice, historyLogins, navigation, setHistoryLogins)
-
-
-        getDataHistorylogin(token, setHistoryLogins, setIsRefresh);
+        const res = await logOut(client, index, isThisDevice, historyLogins, navigation, setHistoryLogins)
+        
         if (isThisDevice) {
 
                 setAppState({ isLoading: false, isLogin: false })
+        }else{
+                getDataHistorylogin(token, setHistoryLogins, setIsRefresh);
         }
 
 }
@@ -66,21 +45,16 @@ export const handleLogOut = async (index, isThisDevice, historyLogins, navigatio
 
 
 export const handleLogOutAll = async (historyLogins, navigation, setHistoryLogins) => {
-        const token = await getToken()
+      
         const client = historyLogins.map((e) => {
                 return {
-                        clientID: e.clientID
+                        clientID: e.clientID,
+                        isLogout: true
                 }
         })
 
-        client.forEach((item, i) => {
 
-                item.isLogout = true;
-
-        })
-
-
-        const res = await logOut(client, token, historyLogins, navigation, setHistoryLogins)
+        const res = await logOut(client, historyLogins, navigation, setHistoryLogins)
         setAppState({ isLoading: false, isLogin: false })
 }
 
@@ -90,9 +64,9 @@ export const handleLogOutAll = async (historyLogins, navigation, setHistoryLogin
 
 export const getDataHistoryloginOnreFresh = async (setHistoryLogins, setIsRefresh) => {
         setIsRefresh(true)
-        const token = await getToken()
+     
        
-        const res = await getHistoryLogin(token)
+        const res = await getHistoryLogin()
         if (res != "Invalid token") {
                 setHistoryLogins(res)
                 setIsRefresh(false)
